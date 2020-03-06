@@ -24,6 +24,7 @@ Data:
 			test.txt
 			val.txt
 			trainval.txt
+```bash		
 .
 ├── Data
 │   └── vott-csv-export
@@ -34,3 +35,4 @@ Data:
 ├── code12.py
 ├── code3.py
 └── my_split.py				# It will generate the `ImageSets Directory`
+```
