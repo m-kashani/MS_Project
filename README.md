@@ -24,10 +24,13 @@ Data:
 			test.txt
 			val.txt
 			trainval.txt
-
-	vott-csv-export/
-		/JPGImages	#	It includes all of the JPGImages.
-			.
-			.
-			.
-			.
+.
+├── Data
+│   └── vott-csv-export
+│       └── JPGImages			# It included all of the JPGImages.
+│           └── 3D_L0215_161.jpg
+├── LICENSE
+├── README.md
+├── code12.py
+├── code3.py
+└── my_split.py				# It will generate the `ImageSets Directory`
