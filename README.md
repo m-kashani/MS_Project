@@ -17,7 +17,7 @@ Annotations:
  - [1] Choosing 20 Images with most amount of Objects and then choosing 3 good images.
  - [2] Tensorboard?
  - [3] Converting my `.csv to coco format/ imagenet` / Asked 2 people + later on.
- - [4]
+ - [4] Ubuntu > Mac issue ... (Finally commit them ... 1 version!)
  
 >>> - [5] Reading from the good project (readme) https://github.com/youngwanLEE/vovnet-detectron2/edit/master/README.md
  

@@ -5,8 +5,8 @@ from PIL import Image,ImageDraw,ImageFont # Explained Bellow.
     # http://effbot.org/imagingbook/introduction.html
 
 # Read a comma-separated values (.csv) file into DataFrame.
-train = pd.read_csv('./Data/Annotations/FL_Keys_Coral-export.csv') # From code 1.
-print(train.label.unique()) # From code 1.
+DF = pd.read_csv('./Data/Annotations/FL_Keys_Coral-export.csv') # From code 1.
+print(DF.label.unique()) # From code 1.
 
 JPGImagesPATH = './Data/vott-csv-export/JPGImages/' # From code 2.
 jpg1_str = '3D_L0215_161.jpg' # From code 2.
@@ -39,7 +39,8 @@ font = ImageFont.truetype("arial.ttf", font_size)
 draw = ImageDraw.Draw(input_image)
 
 # Iterating over the img for multiple objects.
-for _,row in train[train.image == jpg1_str].iterrows(): # _ is the object number, for example in 3D_L0215_161.jpg we have 29 objects.
+for _,row in DF[
+DF.image == jpg1_str].iterrows(): # _ is the object number, for example in 3D_L0215_161.jpg we have 29 objects.
     
     xmin = row.xmin
     xmax = row.xmax
