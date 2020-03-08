@@ -1,7 +1,5 @@
 # MS_Project
 
-
-
 #	Explain the directories and everything ... 
 
 Annotations:
@@ -12,8 +10,16 @@ Annotations:
  - [x] Running the Docker file.
  - [x] Installing the detectron2.
  - [x] Working withthe Meshrcnn, pytorch3. [added to the future work.] https://github.com/m-kashani/meshrcnn
- - [] Converting my .csv to coco format.
- - [] Reading from the good project (readme) https://github.com/youngwanLEE/vovnet-detectron2/edit/master/README.md
+ - [x] JPGImages.zip -> Add to GitHub. (.gitignore)
+ - [x] Opened an issue on `code12.py`. > Add to do list here:
+ - []
+
+ - [1] Choosing 20 Images with most amount of Objects and then choosing 3 good images.
+ - [2] Tensorboard?
+ - [3] Converting my `.csv to coco format/ imagenet` / Asked 2 people + later on.
+ - [4]
+ 
+>>> - [5] Reading from the good project (readme) https://github.com/youngwanLEE/vovnet-detectron2/edit/master/README.md
  
 
 
@@ -24,7 +30,7 @@ Data:
 			test.txt
 			val.txt
 			trainval.txt
-```bash		
+```bash
 .
 ├── Data
 │   └── vott-csv-export

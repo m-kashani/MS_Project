@@ -5,7 +5,7 @@ from PIL import Image,ImageDraw,ImageFont # Explained Bellow.
     # http://effbot.org/imagingbook/introduction.html
 
 # Read a comma-separated values (.csv) file into DataFrame.
-train = pd.read_csv('./Data/vott-csv-export/FL_Keys_Coral-export.csv') # From code 1.
+train = pd.read_csv('./Data/Annotations/FL_Keys_Coral-export.csv') # From code 1.
 print(train.label.unique()) # From code 1.
 
 JPGImagesPATH = './Data/vott-csv-export/JPGImages/' # From code 2.

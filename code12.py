@@ -12,9 +12,10 @@ import matplotlib.pyplot as plt
 from matplotlib import patches #? https://matplotlib.org/3.1.1/api/patches_api.html
 	
 # Read a comma-separated values (.csv) file into DataFrame.
-train = pd.read_csv('./Data/vott-csv-export/FL_Keys_Coral-export.csv') # Used in code 2 as well
-# print(train.head(5)) # Looking at the first 5 rows to get the insigt on the data.
-print(train.label.unique())
+DF = pd.read_csv('./Data/Annotations/FL_Keys_Coral-export.csv') # Used in code 2 as well
+
+print(DF.head(5)) # Looking at the first 5 rows to get the insigt on the data.
+print(DF.label.unique())
 
 """
 #Code 2:
@@ -32,13 +33,40 @@ jpgfile = Image.open(str(JPGImagesPATH)+str(jpg1_str)) #.convert('RGBA')
 
 # Printing the size, shape and the format of each image. (in bits, (width,length), jpeg/png/jpg ... ?
 print(jpgfile.bits,'= bits |', jpgfile.size,'= shape |', jpgfile.format,'= imageType')
-jpgfile.show()
+#jpgfile.show()
 
 # How many images do I have?
-print(train['image'].nunique())
+print(DF['image'].nunique())
 	
 # How many objects in each images exist?
-print(train['image'].value_counts())
+print(DF['image'].value_counts())
+
+num = 20
+pd.DataFrame(DF['image'].value_counts().head(num)).to_csv('top_'+str(num)+'.csv')
+
+print(DF['image'].value_counts().head(20))
+top_5_list = ['A_3D_L0646_144.jpg','3D_L0622_176.jpg','3R010215_829.jpg','B_3D_L0647_42.jpg','3D_L0622_139.jpg']
 
 # How many classes do we have in label?
-print(train['label'].value_counts())
+print(DF['label'].value_counts()[:])
+
+
+########  Visualization:
+cn = ['red','g','b','tan','m','k','w','c','y','teal']
+
+plt.figure(figsize=(50,30))
+plt.title('Number of differet objects')
+plt.xlabel('Classes')
+plt.ylabel('Numbers')
+
+# https://stackoverflow.com/questions/51058053/how-to-plot-a-histogram-of-one-column-colored-by-another-in-python
+# build a histogram for the same class breaks as earlier chart
+n, bins, patches = plt.hist(DF['label'], bins=len(cn))
+
+# apply the same color for each class to match the map
+idx = 0
+for c, p in zip(bins, patches):
+    plt.setp(p, 'facecolor', cn[idx])
+    idx+=1
+
+plt.show()
