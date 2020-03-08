@@ -1,4 +1,5 @@
 # MS_Project
+**Comparison of different object detection algorithms on coral reef data sets.**
 
 
 
