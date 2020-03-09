@@ -72,4 +72,9 @@ if __name__ == "__main__":
         fout.write(line + "\n")
     fout.close()
     
-    print(annotation_num, len(trainval), len(test), len(train), len(val))
+    # print(annotation_num, len(trainval), len(test), len(train), len(val))
+    print("\nDataset is splited successfully!\n") # It creates the ImageSets/Main.
+    print("Number of images in test Set:", len(test))
+    print("Number of images in train Set:", len(train))
+    print("Number of images validation Set:", len(val),'\n')
+    print("*"*60)

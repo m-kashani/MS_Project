@@ -42,7 +42,7 @@ print(DF['image'].nunique())
 print(DF['image'].value_counts())
 
 num = 20
-pd.DataFrame(DF['image'].value_counts().head(num)).to_csv('top_'+str(num)+'.csv')
+pd.DataFrame(DF['image'].value_counts().head(num)).to_csv('top_'+str(num)+'.csv') #Small fix is needed here. (later)
 
 print(DF['image'].value_counts().head(20))
 top_5_list = ['A_3D_L0646_144.jpg','3D_L0622_176.jpg','3R010215_829.jpg','B_3D_L0647_42.jpg','3D_L0622_139.jpg']
@@ -52,9 +52,9 @@ print(DF['label'].value_counts()[:])
 
 
 ########  Visualization:
-cn = ['red','g','b','tan','m','k','w','c','y','teal']
+cn = ['red','green','blue','tan','magenta','black','white','cyan','yellow','teal']
 
-plt.figure(figsize=(50,30))
+plt.figure(figsize=(18,8))
 plt.title('Number of differet objects')
 plt.xlabel('Classes')
 plt.ylabel('Numbers')
