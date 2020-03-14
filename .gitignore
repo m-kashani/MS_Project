@@ -5,3 +5,5 @@
 *.xlsx
 *.zip
 *.ipynb
+csvtojson5/Annotations
+csvtojson5/pycococreator
