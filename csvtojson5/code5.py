@@ -22,7 +22,15 @@ im = im_0
 # Read a comma-separated values (.csv) file into DataFrame.
 DF = pd.read_csv('../Data/Annotations/FL_Keys_Coral-export.csv') # From code 1.
 
-print(DF[DF['image']==im]) # test.
+#'''
+imageArea = 2704 * 1524
+DF['height'] = DF.apply(lambda DF: abs(DF['ymax'] - DF['ymin']), axis = 1)
+DF['width'] = DF.apply(lambda DF: abs(DF['xmax'] - DF['xmin']), axis = 1)
+DF['objArea'] = DF.apply(lambda DF: (DF['width'] * DF['height']),axis = 1)
+DF['objPortion'] = DF.apply(lambda DF: (DF['objArea'] / imageArea),axis = 1)
+#'''
+#print(DF[DF['image']==im]) # test.
+
 ''' result:
                image         xmin         ymin         xmax         ymax    label
 366  3D_L0441_41.jpg  1771.904437   922.258702  1984.163823  1184.253859     Ssid
@@ -32,7 +40,8 @@ print(DF[DF['image']==im]) # test.
 '''
 
 NewDF = DF[DF['image']==im] # test.
-# print(NewDF)
+print(NewDF)
+
 
 # How many classes do we have in label?
 print(NewDF['label'].value_counts()[:])
@@ -41,6 +50,7 @@ Antillo    3
 Ssid       1
 '''
 
+"""
 ################################# From code 3 We have:
 imagelist = [im]
 from PIL import Image,ImageDraw,ImageFont
@@ -99,7 +109,7 @@ for jpeg_str in imagelist:
             draw.rectangle((xmin,ymin,xmax,ymax), outline=edgecolor,width=3)
             draw.text(((xmin+ (width-w)/2),ymin+(height-h)/2), text=msg, fill=edgecolor)
 
-            output_image.save(str(_)+str(classes[3])+"__"+str(jpg1_str[:-4])+'.png') # creating the binary mask for Anitolio.
+            output_image.save(str(_)+"_"+str(classes[3])+"_"+str(jpg1_str[:-4])+'.png') # creating the binary mask for Anitolio.
         elif row.label == classes[4]:
             print(classes[4])
             msg = classes[4]
@@ -149,12 +159,14 @@ for jpeg_str in imagelist:
             draw.rectangle((xmin,ymin,xmax,ymax), outline=edgecolor,width=3)
             draw.text(((xmin+ (width-w)/2),ymin+(height-h)/2), text=msg, fill=edgecolor)
 
-            output_image.save(str(_)+str(classes[9])+"__"+str(jpg1_str[:-4])+'.png') # Creating the binary mask for the Ssid.
+            output_image.save(str(_)+"_"+str(classes[9])+"_"+str(jpg1_str[:-4])+'.png') # Creating the binary mask for the Ssid.
 
         # print('*'*66)
 
 
 #    output_image.save("Final" + str(jpg1_str)+'.png') # creating the binary mask for Anitolio.
+
+"""
 
 # The goal is to create to convert the 
 
