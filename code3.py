@@ -12,14 +12,10 @@ JPGImagesPATH = './Data/vott-csv-export/JPGImages/' # From code 2.
 #jpg1_str = '3D_L0215_161.jpg' # From code 2.
 
 # Color Name.
-cn = ['red','green','b','tan','magenta','black','white','cyan','yellow','teal']
+cn = ['red','green','blue','tan','magenta','black','white','cyan','yellow','teal']
     #https://python-graph-gallery.com/python-colors/
 # Different Classes.
 classes = ['Past', 'SeaRods', 'Apalm', 'Antillo', 'Other_Coral', 'Fish', 'Galaxaura', 'Orb', 'Gorgonia', 'Ssid']
-
-#imagelist=['A_3D_L0646_144.jpg']
-imagelist=['A_3D_L0646_144.jpg','3D_L0622_176.jpg','3R010215_829.jpg','3D_L0622_139.jpg','B_3D_L0647_42.jpg']
-imagelist2=['3L040215_322.jpg',]
 
 #    """
 #    # Label Dictionary
@@ -27,6 +23,17 @@ imagelist2=['3L040215_322.jpg',]
 #    print(lb_dic.keys())
 #    print(lb_dic.values())
 #    """
+
+imagelist1 = ['A_3D_L0646_144.jpg','3D_L0622_176.jpg','3R010215_829.jpg','3D_L0622_139.jpg','B_3D_L0647_42.jpg'] # First 'Antillo', 'Other_Coral' -> Magenta + cyan + white + yellow + red + green
+imagelist2 = ['3L040215_322.jpg','B_3D_L0647_127.jpg','3D_L0622_91.jpg','3D_L0622_150.jpg','3D_L0453_49.jpg'] 
+imagelist3 = ['3D_L0453_283.jpg','B_3D_L0647_160.jpg','3D_L0623_38.jpg','3L010215_778.jpg','B_3D_L0647_488.jpg'] # First 'Apalm' Observed here. -> Color Blue
+imagelist4 = ['A_3D_L0646_394.jpg','3D_L0215_202.jpg','3D_L0623_59.jpg','C_3D_L0648_194.jpg','A_3D_L0646_263.jpg']
+
+down5 = ['3D_L0443_21.jpg','3D_L0443_36.jpg','3D_L0441_41.jpg','3D_L0457_97.jpg','3D_L0453_119.jpg']
+
+imagelist = down5
+
+print(imagelist) # Test
 
 for jpeg_str in imagelist:
     jpg1_str=jpeg_str
@@ -46,6 +53,7 @@ for jpeg_str in imagelist:
     draw = ImageDraw.Draw(input_image)
 
     # Iterating over the img for multiple objects.
+    _ = 0
     for _,row in DF[DF.image == jpg1_str].iterrows(): # _ is the object number, for example in 3D_L0215_161.jpg we have 29 objects.
         
         xmin = row.xmin
