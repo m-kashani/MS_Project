@@ -42,7 +42,6 @@ DF['objPortion'] = DF.apply(lambda DF: (DF['objArea'] / imageArea),axis = 1)
 NewDF = DF[DF['image']==im] # test.
 print(NewDF)
 
-
 # How many classes do we have in label?
 print(NewDF['label'].value_counts()[:])
 ''' result:
@@ -50,7 +49,6 @@ Antillo    3
 Ssid       1
 '''
 
-"""
 ################################# From code 3 We have:
 imagelist = [im]
 from PIL import Image,ImageDraw,ImageFont
@@ -67,15 +65,16 @@ for jpeg_str in imagelist:
         xmax = row.xmax
         ymin = row.ymin
         ymax = row.ymax
+        width = row.width
+        height = row.height
 
-        width = row.xmax - row.xmin
-        height = row.ymax - row.ymin
         print('object_id: '+str(_),"width: "+str(width),"height: "+str(height))
 
-        input_image = Image.open(str(path)+str(jpg1_str))       
-        output_image = input_image
-        draw = ImageDraw.Draw(input_image)
+        input_image = Image.open(str(path)+str(jpg1_str))
 
+        draw = ImageDraw.Draw(input_image)
+        output_image = input_image
+        
         if row.label == classes[0]:
             print(classes[0])
             msg = classes[0]
@@ -106,8 +105,11 @@ for jpeg_str in imagelist:
             w, h = draw.textsize(msg)
 
             edgecolor = cn[3]
-            draw.rectangle((xmin,ymin,xmax,ymax), outline=edgecolor,width=3)
-            draw.text(((xmin+ (width-w)/2),ymin+(height-h)/2), text=msg, fill=edgecolor)
+#            draw.rectangle((xmin,ymin,xmax,ymax), outline=edgecolor,width=3)
+#            draw.text(((xmin+ (width-w)/2),ymin+(height-h)/2), text=msg, fill=edgecolor)
+            
+            imcr = input_image.crop((xmin,ymin,xmax,ymax)) # Test
+            imcr.show() # Test
 
             output_image.save(str(_)+"_"+str(classes[3])+"_"+str(jpg1_str[:-4])+'.png') # creating the binary mask for Anitolio.
         elif row.label == classes[4]:
@@ -156,8 +158,11 @@ for jpeg_str in imagelist:
             w, h = draw.textsize(msg)
 
             edgecolor = cn[9]
-            draw.rectangle((xmin,ymin,xmax,ymax), outline=edgecolor,width=3)
-            draw.text(((xmin+ (width-w)/2),ymin+(height-h)/2), text=msg, fill=edgecolor)
+#            draw.rectangle((xmin,ymin,xmax,ymax), outline=edgecolor,width=3)
+#            draw.text(((xmin+ (width-w)/2),ymin+(height-h)/2), text=msg, fill=edgecolor)
+
+            imcr = input_image.crop((xmin,ymin,xmax,ymax)) # Test
+            imcr.show() # Test
 
             output_image.save(str(_)+"_"+str(classes[9])+"_"+str(jpg1_str[:-4])+'.png') # Creating the binary mask for the Ssid.
 
@@ -166,7 +171,6 @@ for jpeg_str in imagelist:
 
 #    output_image.save("Final" + str(jpg1_str)+'.png') # creating the binary mask for Anitolio.
 
-"""
 
 # The goal is to create to convert the 
 
