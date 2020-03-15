@@ -39,7 +39,8 @@ DF['objPortion'] = DF.apply(lambda DF: (DF['objArea'] / imageArea),axis = 1)
 369  3D_L0441_41.jpg  1194.189761   483.399516  1380.608874   758.050469  Antillo
 '''
 
-NewDF = DF[DF['image']==im] # test.
+NewDF = DF[DF['image']==im]
+NewDF.to_json('json_annotation.json') # Just a sample example of pandas to_json() method.
 print(NewDF)
 
 # How many classes do we have in label?
