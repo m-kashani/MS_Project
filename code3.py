@@ -35,6 +35,17 @@ imagelist = down5
 
 print(imagelist) # Test
 
+
+def _insideIf(category_id):
+    print(classes[category_id]) # tested.
+    msg = classes[category_id]
+    w, h = draw.textsize(msg)
+
+    edgecolor = cn[category_id]
+    draw.rectangle((xmin,ymin,xmax,ymax), outline=edgecolor,width=3)
+    draw.text(((xmin+ (width-w)/2),ymin+(height-h)/2), text=msg, fill=edgecolor)
+
+
 for jpeg_str in imagelist:
     jpg1_str=jpeg_str
 
@@ -65,98 +76,10 @@ for jpeg_str in imagelist:
         height = row.ymax - row.ymin
         print('object_id: '+str(_),"width: "+str(width),"height: "+str(height))
 
-        if row.label == classes[0]:
-            print(classes[0]) # tested.
-            msg = classes[0]
-            w, h = draw.textsize(msg)
 
-            edgecolor = cn[0]
-            draw.rectangle((xmin,ymin,xmax,ymax), outline=edgecolor,width=3)
-            draw.text(((xmin+ (width-w)/2),ymin+(height-h)/2), text=msg, fill=edgecolor)
-
-        elif row.label == classes[1]:
-            print(classes[1]) # tested.
-            msg = classes[1]
-            w, h = draw.textsize(msg)
-
-            edgecolor = cn[1]
-            draw.rectangle((xmin,ymin,xmax,ymax), outline=edgecolor,width=3)
-            draw.text(((xmin+ (width-w)/2),ymin+(height-h)/2), text=msg, fill=edgecolor)
-
-        elif row.label == classes[2]:
-            print(classes[2]) # tested.
-            msg = classes[2]
-            w, h = draw.textsize(msg)
-
-            edgecolor = cn[2]
-            draw.rectangle((xmin,ymin,xmax,ymax), outline=edgecolor,width=3)
-            draw.text(((xmin+ (width-w)/2),ymin+(height-h)/2), text=msg, fill=edgecolor)
-
-        elif row.label == classes[3]:
-            print(classes[3]) # tested.
-            msg = classes[3]
-            w, h = draw.textsize(msg)
-
-            edgecolor = cn[3]
-            draw.rectangle((xmin,ymin,xmax,ymax), outline=edgecolor,width=3)
-            draw.text(((xmin+ (width-w)/2),ymin+(height-h)/2), text=msg, fill=edgecolor)
-
-        elif row.label == classes[4]:
-            print(classes[4]) # tested.
-            msg = classes[4]
-            w, h = draw.textsize(msg)
-
-            edgecolor = cn[4]
-            draw.rectangle((xmin,ymin,xmax,ymax), outline=edgecolor,width=3)
-            draw.text(((xmin+ (width-w)/2),ymin+(height-h)/2), text=msg, fill=edgecolor)
-
-        elif row.label == classes[5]:
-            print(classes[5]) # tested.
-            msg = classes[5]
-            w, h = draw.textsize(msg)
-
-            edgecolor = cn[5]
-            draw.rectangle((xmin,ymin,xmax,ymax), outline=edgecolor,width=3)
-            draw.text(((xmin+ (width-w)/2),ymin+(height-h)/2), text=msg, fill=edgecolor)
-
-        elif row.label == classes[6]:
-            print(classes[6]) # tested.
-            msg = classes[6]
-            w, h = draw.textsize(msg)
-
-            edgecolor = cn[6]
-            draw.rectangle((xmin,ymin,xmax,ymax), outline=edgecolor,width=3)
-            draw.text(((xmin+ (width-w)/2),ymin+(height-h)/2), text=msg, fill=edgecolor)
-
-
-        elif row.label == classes[7]:
-            print(classes[7]) # tested.
-            msg = classes[7]
-            w, h = draw.textsize(msg)
-
-            edgecolor = cn[7]
-            draw.rectangle((xmin,ymin,xmax,ymax), outline=edgecolor,width=3)
-            draw.text(((xmin+ (width-w)/2),ymin+(height-h)/2), text=msg, fill=edgecolor)
-
-        elif row.label == classes[8]:
-            print(classes[8]) # tested.
-            msg = classes[8]
-            w, h = draw.textsize(msg)
-
-            edgecolor = cn[8]
-            draw.rectangle((xmin,ymin,xmax,ymax), outline=edgecolor,width=3)
-            draw.text(((xmin+ (width-w)/2),ymin+(height-h)/2), text=msg, fill=edgecolor)
-
-        elif row.label == classes[9]:
-            print(classes[9]) # tested.
-            msg = classes[9]
-            w, h = draw.textsize(msg)
-
-            edgecolor = cn[9]
-            draw.rectangle((xmin,ymin,xmax,ymax), outline=edgecolor,width=3)
-            draw.text(((xmin+ (width-w)/2),ymin+(height-h)/2), text=msg, fill=edgecolor)
-
-        # print('*'*66)
+        for category_id in range(len(classes)):
+            if row.label == classes[category_id]:
+                _insideIf(category_id)
 
     # (outside of the loop) Ploting the image after bouding box.
     output_image = input_image

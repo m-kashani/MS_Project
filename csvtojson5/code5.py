@@ -1,4 +1,4 @@
-# .csv to .json on 5 images.
+# .csv to .json on 5 images creating the binary mask for each image and then using the pytococo.
 
 # Libraries.
 import pandas as pd

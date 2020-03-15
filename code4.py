@@ -1,4 +1,5 @@
-# Preprocessing
+# Preprocessing and trying to intensify the red.
+
 import pandas as pd
 from PIL import Image,ImageDraw,ImageFont
 import cv2
@@ -33,7 +34,6 @@ Dependencies:
 """
 import numpy as np
 import cv2
-
 
 def apply_mask(matrix, mask, fill_value):
     masked = np.ma.array(matrix, mask=mask, fill_value=fill_value)
