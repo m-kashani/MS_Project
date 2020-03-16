@@ -1,10 +1,14 @@
 .DS_Store
+.vscode
+
 *.jpg
+*.jpeg
 *.txt
 *.csv
 *.xlsx
 *.zip
 *.ipynb
+
 csvtojson5/Annotations
 csvtojson5/pycococreator
 csvtojson5/detectron2
