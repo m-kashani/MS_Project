@@ -1,42 +1,34 @@
 # .csv to .json on 5 images creating the binary mask for each image and then using the pytococo.
 # Cropper and Saver -> Do it + Function.
 
-# Libraries.
+# Libraries and initial variables.
 from PIL import Image, ImageDraw, ImageFont
 import pandas as pd
 
-# Color Name.
-cn = ['red', 'green', 'b', 'tan', 'magenta',
-      'black', 'white', 'cyan', 'yellow', 'teal']
-# https://python-graph-gallery.com/python-colors/
 # Different Classes.
 classes = ['Past', 'SeaRods', 'Apalm', 'Antillo', 'Other_Coral',
            'Fish', 'Galaxaura', 'Orb', 'Gorgonia', 'Ssid']
 
-# Path + Image Name.
-path = '/home/mahdi/Desktop/MasterProject/Data/vott-csv-export/JPGImages/'
-
+# Sample images to check my function.
 im_0 = '3D_L0441_41.jpg'  # 4 objects lowest 3
+im_1 = 'A_3D_L0646_144.jpg'  # Almost 53 objects which are mostly `Galaxaura`.
+img_2345 = ['3D_L0622_176.jpg', '3R010215_829.jpg',
+            '3D_L0622_139.jpg', 'B_3D_L0647_42.jpg']
 
-#im_1 = 'A_3D_L0646_144.jpg'
-#next4 = ['3D_L0622_176.jpg','3R010215_829.jpg','3D_L0622_139.jpg','B_3D_L0647_42.jpg']
+# Setting up the image PATH + Reading the images.
 
-im = im_0
+DF = pd.read_csv('../Data/Annotations/FL_Keys_Coral-export.csv')  # From Code12
 
-# Read a comma-separated values (.csv) file into DataFrame.
-# From code 1.
-DF = pd.read_csv('../Data/Annotations/FL_Keys_Coral-export.csv')
+JPGPATH = '../Data/vott-csv-export/JPGImages/'
 
-# '''
 imageArea = 2704 * 1524
 DF['height'] = DF.apply(lambda DF: abs(DF['ymax'] - DF['ymin']), axis=1)
 DF['width'] = DF.apply(lambda DF: abs(DF['xmax'] - DF['xmin']), axis=1)
 DF['objArea'] = DF.apply(lambda DF: (DF['width'] * DF['height']), axis=1)
 DF['objPortion'] = DF.apply(lambda DF: (DF['objArea'] / imageArea), axis=1)
-# '''
 # print(DF[DF['image']==im]) # test.
 
-''' result:
+''' result: It will be removed.
 (myenv37) mahdi@mahdi-ThinkPad-T520:~/Desktop/MS_Project/csvtojson5$ python code5.py 
                image         xmin         ymin         xmax         ymax    label      height       width       objArea  objPortion
 366  3D_L0441_41.jpg  1771.904437   922.258702  1984.163823  1184.253859     Ssid  261.995157  212.259386  55610.931154    0.013495
@@ -45,9 +37,10 @@ DF['objPortion'] = DF.apply(lambda DF: (DF['objArea'] / imageArea), axis=1)
 369  3D_L0441_41.jpg  1194.189761   483.399516  1380.608874   758.050469  Antillo  274.650953  186.419113  51200.187013    0.012425
 '''
 
+im = im_0
+
 NewDF = DF[DF['image'] == im]
-# Just a sample example of pandas to_json() method.
-NewDF.to_json('json_annotation.json')
+# NewDF.to_json('json_annotation.json')  # test
 print(NewDF)
 
 # How many classes do we have in label?
@@ -57,147 +50,62 @@ Antillo    3
 Ssid       1
 '''
 
-# From code 3 We have:
-imagelist = [im]
-for jpeg_str in imagelist:
-    jpg1_str = jpeg_str
 
-    # GOAL IS: Plot the image BEFORE and AFTER the bouding Box.
-
-    # Iterating over the img for multiple objects.
-    # _ is the object number, for example in 3D_L0215_161.jpg we have 29 objects.
-    for _, row in DF[DF.image == jpg1_str].iterrows():
-
-        xmin = row.xmin
-        xmax = row.xmax
-        ymin = row.ymin
-        ymax = row.ymax
-        width = row.width
-        height = row.height
-
-        print('object_id: '+str(_), "width: " +
-              str(width), "height: "+str(height))
-
-        input_image = Image.open(str(path)+str(jpg1_str))
-
-        draw = ImageDraw.Draw(input_image)
-        output_image = input_image
-
-        if row.label == classes[0]:
-            print(classes[0])
-            msg = classes[0]
-            w, h = draw.textsize(msg)
-
-            edgecolor = cn[0]
-            draw.rectangle((xmin, ymin, xmax, ymax),
-                           outline=edgecolor, width=3)
-            draw.text(((xmin + (width-w)/2), ymin+(height-h)/2),
-                      text=msg, fill=edgecolor)
-        elif row.label == classes[1]:
-            print(classes[1])
-            msg = classes[1]
-            w, h = draw.textsize(msg)
-
-            edgecolor = cn[1]
-            draw.rectangle((xmin, ymin, xmax, ymax),
-                           outline=edgecolor, width=3)
-            draw.text(((xmin + (width-w)/2), ymin+(height-h)/2),
-                      text=msg, fill=edgecolor)
-        elif row.label == classes[2]:
-            print(classes[2])
-            msg = classes[2]
-            w, h = draw.textsize(msg)
-
-            edgecolor = cn[2]
-            draw.rectangle((xmin, ymin, xmax, ymax),
-                           outline=edgecolor, width=3)
-            draw.text(((xmin + (width-w)/2), ymin+(height-h)/2),
-                      text=msg, fill=edgecolor)
-        elif row.label == classes[3]:  # Antillo
-            print(classes[3])
-            msg = classes[3]
-            w, h = draw.textsize(msg)
-
-            edgecolor = cn[3]
-#            draw.rectangle((xmin,ymin,xmax,ymax), outline=edgecolor,width=3)
-#            draw.text(((xmin+ (width-w)/2),ymin+(height-h)/2), text=msg, fill=edgecolor)
-
-            imcr = input_image.crop((xmin, ymin, xmax, ymax))  # Test
-            imcr.show()  # Test
-
-            # creating the binary mask for Anitolio.
-            output_image.save(
-                str(_)+"_"+str(classes[3])+"_"+str(jpg1_str[:-4])+'.png')
-        elif row.label == classes[4]:
-            print(classes[4])
-            msg = classes[4]
-            w, h = draw.textsize(msg)
-
-            edgecolor = cn[4]
-            draw.rectangle((xmin, ymin, xmax, ymax),
-                           outline=edgecolor, width=3)
-            draw.text(((xmin + (width-w)/2), ymin+(height-h)/2),
-                      text=msg, fill=edgecolor)
-        elif row.label == classes[5]:
-            print(classes[5])
-            msg = classes[5]
-            w, h = draw.textsize(msg)
-
-            edgecolor = cn[5]
-            draw.rectangle((xmin, ymin, xmax, ymax),
-                           outline=edgecolor, width=3)
-            draw.text(((xmin + (width-w)/2), ymin+(height-h)/2),
-                      text=msg, fill=edgecolor)
-        elif row.label == classes[6]:
-            print(classes[6])
-            msg = classes[6]
-            w, h = draw.textsize(msg)
-
-            edgecolor = cn[6]
-            draw.rectangle((xmin, ymin, xmax, ymax),
-                           outline=edgecolor, width=3)
-            draw.text(((xmin + (width-w)/2), ymin+(height-h)/2),
-                      text=msg, fill=edgecolor)
-        elif row.label == classes[7]:
-            print(classes[7])
-            msg = classes[7]
-            w, h = draw.textsize(msg)
-
-            edgecolor = cn[7]
-            draw.rectangle((xmin, ymin, xmax, ymax),
-                           outline=edgecolor, width=3)
-            draw.text(((xmin + (width-w)/2), ymin+(height-h)/2),
-                      text=msg, fill=edgecolor)
-        elif row.label == classes[8]:
-            print(classes[8])
-            msg = classes[8]
-            w, h = draw.textsize(msg)
-
-            edgecolor = cn[8]
-            draw.rectangle((xmin, ymin, xmax, ymax),
-                           outline=edgecolor, width=3)
-            draw.text(((xmin + (width-w)/2), ymin+(height-h)/2),
-                      text=msg, fill=edgecolor)
-        elif row.label == classes[9]:  # Ssid
-            print(classes[9])
-            msg = classes[9]
-            w, h = draw.textsize(msg)
-
-            edgecolor = cn[9]
-#            draw.rectangle((xmin,ymin,xmax,ymax), outline=edgecolor,width=3)
-#            draw.text(((xmin+ (width-w)/2),ymin+(height-h)/2), text=msg, fill=edgecolor)
-
-            imcr = input_image.crop((xmin, ymin, xmax, ymax))  # Test
-            imcr.show()  # Test
-
-            # Creating the binary mask for the Ssid.
-            output_image.save(
-                str(_)+"_"+str(classes[9])+"_"+str(jpg1_str[:-4])+'.png')
-
-        # print('*'*66)
+def insideIfCropper():
+    print("To be written.")
 
 
-#    output_image.save("Final" + str(jpg1_str)+'.png') # creating the binary mask for Anitolio.
+def cropper(imageList):
+    """
+    Arg: list of jpeg images.
+    Return: cropped images and save them.
+
+    # Iterating over the images in imagelist for multiple objects.
+
+    # # _ is the object number, for example in 3D_L0215_161.jpg we have 29 objects.
+    """
+    # Color Name.
+    cn = ['red', 'green', 'b', 'tan', 'magenta',
+          'black', 'white', 'cyan', 'yellow', 'teal']
+
+    # You can edit the jpg1_str later. -> Here I am testing it only on one image.
+    for jpg1_str in [imageList]:
+        print('jpg_str:', jpg1_str)
+        for object_id, row in DF[DF.image == jpg1_str].iterrows():
+
+            xmin = row.xmin
+            xmax = row.xmax
+            ymin = row.ymin
+            ymax = row.ymax
+            # Might be unnecessary but I am keeping it here for a while + better speed performance. (To be checked later.)
+            width = row.width
+            height = row.height
+
+            # I print the object_id and height and width of each object here. ( Or bounding Box.)
+            print('object_id: '+str(object_id), "objWidth: " +
+                  str(width), "objHeight: "+str(height))
+
+            input_image = Image.open(JPGPATH + jpg1_str)
+            # print(input_image)  # Test to see if the image is being read.
+
+            for index in range(len(classes)):
+                if row.label == classes[index]:
+                    print("classes[index]: ", classes[index])
+                    # msg = classes[index]
+                    # w, h = draw.textsize(msg)
+                    # edgecolor = cn[index]
+                    # draw.rectangle((xmin,ymin,xmax,ymax), outline=edgecolor,width=3)
+                    # draw.text(((xmin+ (width-w)/2),ymin+(height-h)/2), text=msg, fill=edgecolor)
+
+                    imcr = input_image.crop((xmin, ymin, xmax, ymax))  # Test
+                    imcr.show()  # Test
+
+                    # creating the binary mask for Anitolio.
+                    renameIt = jpg1_str[:-4]
+                    imcr.save(
+                        str(object_id)+"_"+str(classes[index])+"_"+renameIt+'.png')
+
+        #    output_image.save("Final" + str(jpg1_str)+'.png') # creating the binary mask for Anitolio.
 
 
-# The goal is to create to convert the
+cropper(im)
