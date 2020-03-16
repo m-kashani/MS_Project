@@ -44,7 +44,7 @@ imagelist = down5
 print(imagelist)  # Test
 
 
-def _insideIf(category_id):
+def _insideIfBoxMsg(category_id):
     print(classes[category_id])  # tested.
     msg = classes[category_id]
     w, h = draw.textsize(msg)
@@ -89,7 +89,7 @@ for jpeg_str in imagelist:
 
         for category_id in range(len(classes)):
             if row.label == classes[category_id]:
-                _insideIf(category_id)
+                _insideIfBoxMsg(category_id)
 
     # (outside of the loop) Ploting the image after bouding box.
     output_image = input_image
