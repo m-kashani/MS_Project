@@ -1,15 +1,10 @@
 # MS_Project
 **Comparison of different object detection algorithms on coral reef data sets.**
 
-<<<<<<< HEAD
-=======
-
-
 
 >Powered By: [[`detectron2(code)`](https://github.com/facebookresearch/detectron)]
 
 ## Abstract
->>>>>>> 71d68223c29d9c308ae4a87e901d7f2b01527fba
 #	Explain the directories and everything ... 
 
 Annotations:
