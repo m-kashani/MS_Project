@@ -28,6 +28,7 @@ Annotations:
  - [ ] Creating the binary mask for the images created in `code5.py` for later on.
  - [ ] Figuring out the rotation and zooming in zooming out and other augmentation methods on the objects.
  - [ ] Running the detectron2 colab in `code8.py`
+ - [x] generated AssertionError: Torch not compiled with CUDA enabled error > `code8.py`
  - [ ] Preprocessing the red images. `code6.py`.
  - [ ] Figuring out the code for evaluation.
 
