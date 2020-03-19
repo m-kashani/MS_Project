@@ -2,12 +2,14 @@
 .vscode
 
 *.jpg
+*.png
 *.jpeg
 *.txt
 *.csv
 *.xlsx
 *.zip
 *.ipynb
+result.html
 
 csvtojson5/Annotations
 csvtojson5/pycococreator

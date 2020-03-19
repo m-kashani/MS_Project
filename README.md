@@ -12,21 +12,27 @@ Annotations:
 	.txt
 
 ## TODO
+ - [x] Reading from the good project (readme) https://github.com/youngwanLEE/vovnet-detectron2/edit/master/README.md
  - [x] Running the Docker file.
  - [x] Installing the detectron2.
  - [x] Working withthe Meshrcnn, pytorch3. [added to the future work.] https://github.com/m-kashani/meshrcnn
  - [x] JPGImages.zip -> Add to GitHub. (.gitignore)
+ - [x] Choosing 20 Images with most amount of Objects and then choosing 3 good images.
  - [x] Opened an issue on `code12.py`. > Add to do list here:
- - []
+ - [x] Code 5 should crop the objects in images and save their renamed name in an specific directory.
+ - [x] Upload the zipped directory to the google drive.
+ - [x] Ubuntu > Mac issue ... (Finally commit them ... 1 version!)
+ - [x] Refactoring all of the codes with autopep8 standard and auto config and installing Kite.
 
- - [1] Choosing 20 Images with most amount of Objects and then choosing 3 good images.
- - [2] Tensorboard?
- - [3] Converting my `.csv to coco format/ imagenet` / Asked 2 people + later on.
- - [4] Ubuntu > Mac issue ... (Finally commit them ... 1 version!)
- 
->>> - [5] Reading from the good project (readme) https://github.com/youngwanLEE/vovnet-detectron2/edit/master/README.md
- 
+ - [ ] Converting my `.csv to coco format/ imagenet` / code6 and code7.py
+ - [ ] Creating the binary mask for the images created in `code5.py` for later on.
+ - [ ] Figuring out the rotation and zooming in zooming out and other augmentation methods on the objects.
+ - [ ] Running the detectron2 colab in `code8.py`
+ - [ ] Preprocessing the red images. `code6.py`.
+ - [ ] Figuring out the code for evaluation.
 
+ - [ ] FlowerDetection -> ALDI
+ - [ ] Zeidan -> ImageProcessing Proj
 
 Data:
 	ImageSets/
@@ -38,12 +44,108 @@ Data:
 ```bash
 .
 ├── Data
+│   ├── Annotations
+│   │   ├── FL_Keys_Coral-export.csv
+│   │   └── my_data.txt
+│   ├── ImageSets
+│   │   └── Main
+│   │   ├── test.txt
+│   │   ├── train.txt
+│   │   ├── trainval.txt
+│   │   └── val.txt
 │   └── vott-csv-export
-│       └── JPGImages			# It included all of the JPGImages.
-│           └── 3D_L0215_161.jpg
+│   └── JPGImages
+│   ├── 3D_L0215_161.jpg
+    .
+    .
+    .
+│   └── D_3D_L0649_83.jpg
+├── JPGImages.zip
 ├── LICENSE
+├── NewDF.csv # width, height, aria, Object portion
+├── R.ipynb
 ├── README.md
 ├── code12.py
 ├── code3.py
-└── my_split.py				# It will generate the `ImageSets Directory`
+├── code4.py
+├── csvtojson5
+    ├── Cropped_Objects
+       ├── Antillo
+        │   ├── 1001_Antillo_3D_L0622_22.png
+        .
+        .
+        │   └── 999_Antillo_3D_L0622_22.png
+        ├── Apalm
+        │   ├── 1519_Apalm_3D_L0457_119.png
+        .
+        .
+        │   └── 763_Apalm_3D_L0453_81.png
+        ├── Fish
+        │   ├── 105_Fish_3D_L0441_110.png
+        .
+        .
+        │   └── 928_Fish_3D_L0622_176.png
+        ├── Galaxaura
+        │   ├── 1883_Galaxaura_A_3D_L0646_144.png
+        .
+        .
+        │   └── 9_Gorgonia_3D_L0215_161.png
+        ├── Orb
+        │   ├── 104_Orb_3D_L0441_110.png
+        .
+        .
+        │   └── 467_Orb_3D_L0443_93.png
+        ├── Other_Coral
+        │   ├── 1000_Other_Coral_3D_L0622_22.png
+        .
+        .
+        │   └── 997_Other_Coral_3D_L0622_22.png
+        ├── Past
+        │   ├── 0_Past_3D_L0215_161.png
+        .
+        .
+        │   └── 993_Past_3D_L0622_22.png
+        ├── SeaRods
+        │   ├── 1006_SeaRods_3D_L0622_54.png
+        .
+        .
+        │   └── 982_SeaRods_3D_L0622_22.png
+        └── Ssid
+        ├── 102_Ssid_3D_L0441_110.png
+        .
+        .
+        └── 964_Ssid_3D_L0622_22.png
+│   ├── Cropped_Objects.zip
+│   ├── code5.py
+│   ├── code6.py
+│   ├── code7.py
+│   ├── json_annotation_v1.json
+│   ├── output
+│   └── pycococreator
+│   ├── LICENSE
+│   ├── README.md
+│   ├── examples
+│   │   └── shapes
+│   │   ├── shapes_to_coco.py
+│   │   ├── train
+│   │   │   ├── annotations
+│   │   │   │   ├── 1000_square_0.png
+│   │   │   │   ├── 1001_circle_0.png
+│   │   │   │   ├── 1001_circle_3.png
+│   │   │   │   ├── 1001_square_1.png
+│   │   │   │   └── 1001_square_2.png
+│   │   │   └── shapes_train2018
+│   │   │   ├── 1000.jpeg
+│   │   │   └── 1001.jpeg
+│   │   └── visualize_coco.ipynb
+│   ├── pycococreatortools
+│   │   ├── __init__.py
+│   │   └── pycococreatortools.py
+│   ├── setup.cfg
+│   └── setup.py
+├── my_split.py
+├── result.html
+└── top_20.csv
+
+25 directories, 4171 files
 ```
