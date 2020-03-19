@@ -1,0 +1,25 @@
+# Generaed after fixing the issue 349 -> data_dict():
+{"info": {"date_created": "2020-03-19 14:33:23.369240", "description": "Automatically generated COCO json file for Detectron2."}, 
+"images": [{"id": "image", "width": 100, "height": 100, "file_name": "image.png"}], 
+"annotations": [{"id": 1, "image_id": "image", "bbox": [70.0, 30.0, 30.0, 40.0], "area": 1200.0, "iscrowd": 0, "category_id": 0}], 
+"categories": [{"id": 0, "name": "first"}], 
+"licenses": null}
+
+# Generated from data_dict():
+# This is what we want.
+[{'file_name': 'image.png', 'image_id': 'image', 'height': 100, 'width': 100, 
+'annotations': [{'bbox': [70, 30, 100, 70], 'bbox_mode': <BoxMode.XYXY_ABS: 0>, 'category_id': 0, 'iscrowd': 0}]}]
+
+# Generated from data_dict0():
+[{'info': [{'date_created': '2020-03-15 04:59:45.442988', 'description': 'Automatically generated COCO json file for Detectron2.'}], 
+'images': [{'id': 'image', 'width': 100, 'height': 100, 'file_name': 'image.png'}], 
+'annotations': [{'id': 1, 'image_id': 'image', 'bbox': [70.0, 30.0, 30.0, 40.0], 'area': 1200.0, 'iscrowd': 0, 'category_id': 0}], 
+'categories': [{'id': 0, 'name': 'first'}], 
+'licenses': 'null'}]
+
+# Down generated from code7.py:
+{'info': {'description': 'Coral REEF Dataset', 'url': 'hopkinsonlab.org', 'version': 'Version 1.0', 'year': '2019', 'contributor': 'Hopkinson Lab', 'date_created': '2019-9-3 2:07 PM'}, 
+'images': [{'id': 'image', 'width': 100, 'height': 100, 'file_name': 'image.png'}], 
+'annotations': [{'id': 1, 'image_id': 'image', 'bbox': [70.0, 30.0, 30.0, 40.0], 'area': 1200.0, 'iscrowd': 0, 'category_id': 0}], 
+'categories': [{'id': 0, 'name': 'first'}], 
+'licenses': 'null'} 
