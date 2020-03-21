@@ -7,7 +7,10 @@
 
 # Generated from data_dict():
 # This is what we want.
-[{'file_name': 'image.png', 'image_id': 'image', 'height': 100, 'width': 100, 
+[{'file_name': 'image.png', 
+'image_id': 'image', 
+'height': 100, 
+'width': 100, 
 'annotations': [{'bbox': [70, 30, 100, 70], 'bbox_mode': <BoxMode.XYXY_ABS: 0>, 'category_id': 0, 'iscrowd': 0}]}]
 
 # Generated from data_dict0():
