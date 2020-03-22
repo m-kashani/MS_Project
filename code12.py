@@ -31,6 +31,7 @@ def makeDF(csv_path):
     DF['objPortion'] = DF.apply(lambda DF: (DF['objArea'] / imageArea), axis=1)
 
     # DF.to_csv('/NewDF.csv')
+    DF.to_json('json_annot_all.json')
 
     # Looking at the first 5 rows to get the insigt on the data.
     print(DF.head(5))

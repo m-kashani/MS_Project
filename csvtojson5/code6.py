@@ -3,12 +3,10 @@
 
 # If NameError: name 'BoxMode' is not defined. -> python setup.py install <- detectron2.
 
+import json
 from detectron2.structures import Boxes, BoxMode, PolygonMasks
 from detectron2.data import MetadataCatalog, DatasetCatalog
 from detectron2.data.datasets.coco import convert_to_coco_json
-
-
-#####
 
 """ Path and image names.
 JPGImagesPATH = './Data/vott-csv-export/JPGImages/'
@@ -21,7 +19,6 @@ JPGPATH = '../Data/vott-csv-export/JPGImages/'
 # List of images for later on tests.
 imagelist1 = ['A_3D_L0646_144.jpg', '3D_L0622_176.jpg', '3R010215_829.jpg',
               '3D_L0622_139.jpg', 'B_3D_L0647_42.jpg']  # To do later on 5 different images.
-im_0 = ['3D_L0441_41.jpg']  # 4 objects lowest 3
 
 
 def makeDF(csv_path):
@@ -48,7 +45,6 @@ def makeDF(csv_path):
 
 
 DF = makeDF(csv_path=CSV_PATH)
-#####
 
 
 def data_dict0():
@@ -154,22 +150,26 @@ def to_json():
     print("to_json(): ", "Finished successfully!")
 
 
+im_0 = ['3D_L0441_41.jpg']  # 4 objects lowest 3
+
 ################################ FROM HERE I AM WRITING ############################
 # fn, object_id, height, width, xmin, ymin, xmax, ymax, BBOX_MODE, image_id, index)
+
+
 def data_dict2():
     object_id = "366"  # for example
     index = 0
     width = 102
     height = 102
 
-    fn = 'image.png'
+    fn = '3D_L0441_41.jpg'  # 4 objects lowest 3.
 
     xmin = 72
     ymin = 32
     xmax = 102
     ymax = 72
     bbox = [xmin, ymin, xmax, ymax]
-    BBOX_MODE = BoxMode.XYXY_ABS  # Constant.
+    BBOX_MODE = BoxMode.XYXY_ABS  # CONSTANT.
 
     category_id = index  # you need to label it as well.
     image_id = object_id
@@ -192,31 +192,80 @@ if __name__ == '__main__':
     print("__main__: Finished successfully!\n")
 
 
-##################################################################################
+def _json_annotation_v1():
+    object_id = 366
+    THING_CLASSES = ['Past', 'SeaRods', 'Apalm', 'Antillo', 'Other_Coral',
+                     'Fish', 'Galaxaura', 'Orb', 'Gorgonia', 'Ssid']
+    # print(object_id, ': ', THING_CLASSES)
 
-for item in im_0:  # In yek bar Run mishe -> 1 ax darim -> 4 ta object tooshe -> im_0
-    # Filter the .csv file based on the ax -> behem dataframe jadid mide baraye 1 ax.
-    NewDF = DF[DF['image'] == item]
-    print(NewDF)
-    print('*'*80)
+    SampleJson = DF
 
-    for category in [NewDF['label']]:
-        # Filter based on the object ( category ) -> category id + .
-        print(category)
+    category_id = THING_CLASSES.index(SampleJson["label"][object_id])
+    # print(category_id)
 
- #       print(NewerDF)
+    width = SampleJson["width"][object_id]
+    height = SampleJson["height"][object_id]
+    # print(width, height)
 
-    # bbox = [NewDF.xmin, NewDF.ymin, NewDF.xmax, NewDF.ymax] # ...
+    fn = SampleJson["image"][object_id]  # Cool.
+    xmin = SampleJson["xmin"][object_id]
+    ymin = SampleJson["ymin"][object_id]
+    xmax = SampleJson["xmax"][object_id]
+    ymax = SampleJson["ymax"][object_id]
+
+    bbox = [xmin, ymin, xmax, ymax]  # Cool.
     # print(bbox)
+    BBOX_MODE = BoxMode.XYXY_ABS  # CONSTANT.
 
-    # image NAME + image FORMAT
-#    img_name = item.split('.')[0] #
-#    img_frmt = item.split('.')[1] #
+    print('_json_annotation_v1(object_id):, Finished Successfully.')
 
-#    print(img_name, img_frmt)
+    return [{
+        'file_name': fn,
+        'image_id': object_id,
+        'height': height,
+            'width': width,
+            'annotations': [{
+                'bbox': bbox,
+                'bbox_mode': BBOX_MODE,
+                'category_id': category_id,
+            }]
+            }]
 
-    # image ID ??
-#   image_id = item[-7:-4]
 
-    # label ID ??
-    # To do -> create a column in pandas.
+# object_id, THING_CLASSES.
+print(_json_annotation_v1())
+
+# def _whatever(imageList):
+#     THING_CLASSES = ['Past', 'SeaRods', 'Apalm', 'Antillo', 'Other_Coral',
+#                      'Fish', 'Galaxaura', 'Orb', 'Gorgonia', 'Ssid']
+
+#     for jpg_str in imageList:
+#         for item in im_0:  # In yek bar Run mishe -> 1 ax darim -> 4 ta object tooshe -> im_0
+#             # Filter the .csv file based on the ax -> behem dataframe jadid mide baraye 1 ax.
+#             NewDF = DF[DF['image'] == item]
+#             print(NewDF)
+#             print('*'*80)
+
+#             for category in [NewDF['label']]:
+#                 # Filter based on the object ( category ) -> category id + ...
+#                 print(category)
+
+#             #   print(NewerDF)
+
+#                 bbox = [NewDF.xmin, NewDF.ymin, NewDF.xmax, NewDF.ymax]  # ...
+#                 print(bbox)
+
+#             #   image NAME + image FORMAT
+#             #   img_name = item.split('.')[0] #
+#             #   img_frmt = item.split('.')[1] #
+
+#             #   print(img_name, img_frmt)
+
+#             #   image ID ??
+#             #   image_id = item[-7:-4]
+
+#             #   label ID ??
+#             #   To do -> create a column in pandas.
+
+# im_0 = '3D_L0441_41.jpg'  # 4 objects lowest 3.
+# _whatever(im_0)

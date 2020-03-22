@@ -26,3 +26,10 @@
 'annotations': [{'id': 1, 'image_id': 'image', 'bbox': [70.0, 30.0, 30.0, 40.0], 'area': 1200.0, 'iscrowd': 0, 'category_id': 0}], 
 'categories': [{'id': 0, 'name': 'first'}], 
 'licenses': 'null'} 
+
+# Generated from _json_annotation_v1():
+[{'file_name': '3D_L0441_41.jpg', 
+'image_id': 366, 
+'height': 261.9951573849878, 
+'width': 212.25938566552804, 
+'annotations': [{'bbox': [1771.9044368600685, 922.25870157385, 1984.1638225255965, 1184.2538589588378], 'bbox_mode': <BoxMode.XYXY_ABS: 0>, 'category_id': 9}]}]
