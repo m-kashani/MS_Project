@@ -133,6 +133,6 @@ if __name__ == "__main__":
     # print(list_of_images(JPGPATH))
     cropper(list_of_images(JPGPATH))
 
-# To do later:
+# TODO: later:
 # creating the binary mask for Anitolio. -> Later On.
 # output_image.save("Final" + str(jpg1_str)+'.png') # creating the binary mask for Anitolio.

@@ -15,3 +15,7 @@ csvtojson5/Annotations
 csvtojson5/pycococreator
 csvtojson5/detectron2
 csvtojson5/coco
+
+# Datasets
+csvtojson5/balloon
+csvtojson5/soccer

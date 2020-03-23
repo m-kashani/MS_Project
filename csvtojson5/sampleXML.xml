@@ -1,0 +1,65 @@
+<annotation>
+	<folder>JPGImages</folder>
+	<filename>3D_L0441_41.jpg</filename>
+	<path>/Users/mac7/Desktop/MS_Project/Data/vott-csv-export/JPGImages/3D_L0441_41.jpg</path>
+	<source>
+		<database>CORAL_REEF</database>
+	</source>
+	<size>
+		<width>2704</width>
+		<height>1524</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>Ssid</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>1771.9044368600682</xmin>
+			<ymin>922.2587015738499</ymin>
+			<xmax>1984.1638225255972</xmax>
+			<ymax>1184.2538589588378</ymax>
+		</bndbox>
+	</object>
+
+	<object>
+		<name>Antillo</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>1336.3112627986347</xmin>
+			<ymin>93.83739406779661</ymin>
+			<xmax>1687.0006825938567</xmax>
+			<ymax>274.6509533898305</ymax>
+		</bndbox>
+	</object>
+
+	<object>
+		<name>Antillo</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>1395.3747440273037</xmin>
+			<ymin>1147.3531325665858</ymin>
+			<xmax>1519.0389078498292</xmax>
+			<ymax>1304.181219733656</ymax>
+		</bndbox>
+	</object>
+
+	<object>
+		<name>Antillo</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>1194.18976109215</xmin>
+			<ymin>483.3995157384988</ymin>
+			<xmax>1380.6088737201364</xmax>
+			<ymax>758.0504691283293</ymax>
+		</bndbox>
+	</object>
+</annotation>

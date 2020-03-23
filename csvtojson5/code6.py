@@ -1,6 +1,9 @@
 # Validate the detectron dataset + other stuff that can happen here.
 # Maybe later: # http://cocodataset.org/#format-data
-
+# https://github.com/akTwelve/cocosynth
+#
+#
+#
 # If NameError: name 'BoxMode' is not defined. -> python setup.py install <- detectron2.
 
 import json
@@ -138,7 +141,7 @@ def to_json():
     """
 
     # 1
-    DatasetCatalog.register('test', data_dict2)
+    DatasetCatalog.register('test', _json_annotation_v1)
 
     # 2  Metadata(name='test', thing_classes=['first'])
     MetadataCatalog.get('test').set(thing_classes=["first"])
@@ -187,11 +190,6 @@ def data_dict2():
             }]
 
 
-if __name__ == '__main__':
-    to_json()
-    print("__main__: Finished successfully!\n")
-
-
 def _json_annotation_v1():
     object_id = 366
     THING_CLASSES = ['Past', 'SeaRods', 'Apalm', 'Antillo', 'Other_Coral',
@@ -230,6 +228,11 @@ def _json_annotation_v1():
                 'category_id': category_id,
             }]
             }]
+
+
+if __name__ == '__main__':
+    to_json()
+    print("__main__: Finished successfully!\n")
 
 
 # object_id, THING_CLASSES.
