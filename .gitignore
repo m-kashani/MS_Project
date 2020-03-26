@@ -15,6 +15,9 @@ csvtojson5/Annotations
 csvtojson5/pycococreator
 csvtojson5/detectron2
 csvtojson5/coco
+csvtojson5/cocoapi
+
+/csvtojson5/USELESS_CODE
 
 # Datasets
 csvtojson5/balloon

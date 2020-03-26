@@ -1,9 +1,6 @@
 # Validate the detectron dataset + other stuff that can happen here.
 # Maybe later: # http://cocodataset.org/#format-data
 # https://github.com/akTwelve/cocosynth
-#
-#
-#
 # If NameError: name 'BoxMode' is not defined. -> python setup.py install <- detectron2.
 
 import json
@@ -17,7 +14,7 @@ jpg1_str = 'A_3D_L0646_144.jpg'
 """
 
 CSV_PATH = "../Data/Annotations/FL_Keys_Coral-export.csv"
-JPGPATH = '../Data/vott-csv-export/JPGImages/'
+JPG_PATH = '../Data/vott-csv-export/JPGImages/'
 
 # List of images for later on tests.
 imagelist1 = ['A_3D_L0646_144.jpg', '3D_L0622_176.jpg', '3R010215_829.jpg',
@@ -32,22 +29,24 @@ def makeDF(csv_path):
     import pandas as pd
     DF = pd.read_csv(csv_path)
 
-    DF['height'] = DF.apply(lambda DF: abs(DF['ymax'] - DF['ymin']), axis=1)
-    DF['width'] = DF.apply(lambda DF: abs(DF['xmax'] - DF['xmin']), axis=1)
-    DF['objArea'] = DF.apply(lambda DF: (DF['width'] * DF['height']), axis=1)
-    imageArea = 2704 * 1524
-    DF['objPortion'] = DF.apply(lambda DF: (DF['objArea'] / imageArea), axis=1)
+    # DF['height'] = DF.apply(lambda DF: abs(DF['ymax'] - DF['ymin']), axis=1)
+    # DF['width'] = DF.apply(lambda DF: abs(DF['xmax'] - DF['xmin']), axis=1)
+    # DF['objArea'] = DF.apply(lambda DF: (DF['width'] * DF['height']), axis=1)
+    HEIGHT = 2704
+    WIDTH = 1524
+    imageArea = HEIGHT * WIDTH
+    # DF['objPortion'] = DF.apply(lambda DF: (DF['objArea'] / imageArea), axis=1)
 
     # DF.to_csv('/NewDF.csv')
 
     # Looking at the first 5 rows to get the insigt on the data.
-    print(DF.head(5))
-    print(DF.label.unique())
-    print("\nMADE_DF(): Finished successfully!\n")
+    # print(DF.head(5))
+    # print(DF.label.unique())
+    # print("\nMADE_DF(): Finished successfully!\n")
     return DF
 
 
-DF = makeDF(csv_path=CSV_PATH)
+# DF = makeDF(csv_path=CSV_PATH)
 
 
 def data_dict0():
@@ -99,7 +98,99 @@ def data_dict():
         }]
     }]
 
-# print(data_dict(), '\n\n\n\n')
+# print(data_dict(), '\n\n\n\n') # TEST
+
+
+def data_dict2():
+    width = 102
+    height = 102
+
+    for IMG_id, fn in enumerate('3D_L0441_41.jpg'):
+        image_id = IMG_id  # 4 objects lowest 3.
+        file_name = fn  # For example -> enum()
+
+    xmin = 72
+    ymin = 32
+    xmax = 102
+    ymax = 72
+    bbox = [xmin, ymin, xmax, ymax]
+    BBOX_MODE = BoxMode.XYXY_ABS  # CONSTANT.
+
+    object_id = 366
+    THING_CLASSES = ['Past', 'SeaRods', 'Apalm', 'Antillo', 'Other_Coral',
+                     'Fish', 'Galaxaura', 'Orb', 'Gorgonia', 'Ssid']
+    #    category_id = THING_CLASSES.index(imgs_anns["label"][object_id])
+    index = 9
+    category_id = index  # you need to label it as well.
+
+    return [{
+        'file_name': fn,
+        'image_id': image_id,
+        'height': height,
+            'width': width,
+            'annotations': [{
+                'bbox': bbox,
+                'bbox_mode': BoxMode.XYXY_ABS,
+                'category_id': index,
+            }]
+            }]
+
+# print(data_dict2(), '\n\n\n\n') # TEST
+
+
+def _json_annotation_v2():
+    """
+    366,3D_L0441_41.jpg,1771.9044368600685,922.25870157385,1984.1638225255965,1184.2538589588378,Ssid,261.9951573849878,212.25938566552804,55610.93115388085,0.013494864018378733
+    367,3D_L0441_41.jpg,1336.3112627986347,93.8373940677966,1687.0006825938567,274.65095338983053,Antillo,180.81355932203394,350.68941979522197,63409.40220975303,0.01538728524324638
+    368,3D_L0441_41.jpg,1395.3747440273034,1147.3531325665856,1519.038907849829,1304.181219733656,Antillo,156.8280871670704,123.66416382252555,19394.01426340191,0.004706261517738354
+    369,3D_L0441_41.jpg,1194.1897610921499,483.39951573849885,1380.6088737201364,758.0504691283293,Antillo,274.6509533898304,186.41911262798658,51200.18701336269,0.01242452782437671
+    """
+
+    imgs_anns = makeDF(CSV_PATH)
+
+    THING_CLASSES = list(imgs_anns.label.unique())
+
+    datadict = []
+    for IMG_id, fn in enumerate(['3D_L0441_41.jpg']):
+        record = {}
+
+        HEIGHT = 2704
+        WIDTH = 1524
+        # print(width, height)
+
+        record['file_name'] = JPG_PATH + fn  # 4 objects lowest 3.
+        record['image_id'] = IMG_id + 1
+        record['height'] = HEIGHT
+        record['width'] = WIDTH
+
+        objs = []
+        for object_id in [366, 367, 368, 369]:
+
+            xmin = imgs_anns["xmin"][object_id]
+            ymin = imgs_anns["ymin"][object_id]
+            xmax = imgs_anns["xmax"][object_id]
+            ymax = imgs_anns["ymax"][object_id]
+
+            bbox = [xmin, ymin, xmax, ymax]
+            BBOX_MODE = BoxMode.XYXY_ABS  # CONSTANT.
+
+            category_id = THING_CLASSES.index(imgs_anns["label"][object_id])
+            # print(category_id)
+
+            obj = {
+                'bbox': bbox,
+                'bbox_mode': BBOX_MODE,
+                'category_id': category_id,
+            }
+            objs.append(obj)
+            record['annotations'] = objs
+
+        datadict.append(record)
+
+    return datadict
+
+
+print(_json_annotation_v2())
 
 
 def to_json():
@@ -139,83 +230,51 @@ def to_json():
         .
         .
     """
-
+    THING_CLASSES = ['Past', 'SeaRods', 'Apalm', 'Antillo', 'Other_Coral',
+                     'Fish', 'Galaxaura', 'Orb', 'Gorgonia', 'Ssid']
     # 1
-    DatasetCatalog.register('test', _json_annotation_v1)
-
+    DatasetCatalog.register('coraltest', _json_annotation_v2)
     # 2  Metadata(name='test', thing_classes=['first'])
-    MetadataCatalog.get('test').set(thing_classes=["first"])
-
+    MetadataCatalog.get('coraltest').set(thing_classes=THING_CLASSES)
     # 3
-    convert_to_coco_json('test', output_file='./output',
+    convert_to_coco_json('coraltest', output_file='./output',
                          allow_cached=False)  # output_folder -> output_file
+
     # last line:
-    print("to_json(): ", "Finished successfully!")
+    # print("to_json():", "Finished successfully!")
 
 
-im_0 = ['3D_L0441_41.jpg']  # 4 objects lowest 3
+def get_coral_dicts():
 
-################################ FROM HERE I AM WRITING ############################
-# fn, object_id, height, width, xmin, ymin, xmax, ymax, BBOX_MODE, image_id, index)
-
-
-def data_dict2():
-    object_id = "366"  # for example
-    index = 0
-    width = 102
-    height = 102
-
-    fn = '3D_L0441_41.jpg'  # 4 objects lowest 3.
-
-    xmin = 72
-    ymin = 32
-    xmax = 102
-    ymax = 72
-    bbox = [xmin, ymin, xmax, ymax]
-    BBOX_MODE = BoxMode.XYXY_ABS  # CONSTANT.
-
-    category_id = index  # you need to label it as well.
-    image_id = object_id
-
-    return [{
-        'file_name': fn,
-        'image_id': object_id,
-        'height': height,
-            'width': width,
-            'annotations': [{
-                'bbox': bbox,
-                'bbox_mode': BoxMode.XYXY_ABS,
-                'category_id': index,
-            }]
-            }]
-
-
-def _json_annotation_v1():
-    object_id = 366
     THING_CLASSES = ['Past', 'SeaRods', 'Apalm', 'Antillo', 'Other_Coral',
                      'Fish', 'Galaxaura', 'Orb', 'Gorgonia', 'Ssid']
     # print(object_id, ': ', THING_CLASSES)
 
-    SampleJson = DF
+    imgs_anns = makeDF(CSV_PATH)
+    dataset_dict = []
 
-    category_id = THING_CLASSES.index(SampleJson["label"][object_id])
-    # print(category_id)
+    # object_id = range(366, 371)
+    object_id = 366
 
-    width = SampleJson["width"][object_id]
-    height = SampleJson["height"][object_id]
+    fn = imgs_anns["image"][object_id]  # Cool.
+    # height, width = cv2.imread(filename).shape[:2] :TODO?
+    width = 2704
+    height = 1524
     # print(width, height)
 
-    fn = SampleJson["image"][object_id]  # Cool.
-    xmin = SampleJson["xmin"][object_id]
-    ymin = SampleJson["ymin"][object_id]
-    xmax = SampleJson["xmax"][object_id]
-    ymax = SampleJson["ymax"][object_id]
+    xmin = imgs_anns["xmin"][object_id]
+    ymin = imgs_anns["ymin"][object_id]
+    xmax = imgs_anns["xmax"][object_id]
+    ymax = imgs_anns["ymax"][object_id]
 
-    bbox = [xmin, ymin, xmax, ymax]  # Cool.
+    # TODO: Put this inside the object loop #FOR OBJECT ID in NEWDF.
+    bbox = [xmin, ymin, xmax, ymax]
     # print(bbox)
     BBOX_MODE = BoxMode.XYXY_ABS  # CONSTANT.
+    category_id = THING_CLASSES.index(imgs_anns["label"][object_id])
+    # print(category_id)
 
-    print('_json_annotation_v1(object_id):, Finished Successfully.')
+    # print('get_coral_dict(object_id):, Finished Successfully!')
 
     return [{
         'file_name': fn,
@@ -230,45 +289,16 @@ def _json_annotation_v1():
             }]
 
 
+# TODO:
+# Put this in a for loop.
+object_id = 366
+THING_CLASSES = ['Past', 'SeaRods', 'Apalm', 'Antillo', 'Other_Coral',
+                 'Fish', 'Galaxaura', 'Orb', 'Gorgonia', 'Ssid']
+# print(object_id, ': ', THING_CLASSES)
+
+im_0 = ['3D_L0441_41.jpg']  # 4 objects lowest 3
+
+
 if __name__ == '__main__':
     to_json()
-    print("__main__: Finished successfully!\n")
-
-
-# object_id, THING_CLASSES.
-print(_json_annotation_v1())
-
-# def _whatever(imageList):
-#     THING_CLASSES = ['Past', 'SeaRods', 'Apalm', 'Antillo', 'Other_Coral',
-#                      'Fish', 'Galaxaura', 'Orb', 'Gorgonia', 'Ssid']
-
-#     for jpg_str in imageList:
-#         for item in im_0:  # In yek bar Run mishe -> 1 ax darim -> 4 ta object tooshe -> im_0
-#             # Filter the .csv file based on the ax -> behem dataframe jadid mide baraye 1 ax.
-#             NewDF = DF[DF['image'] == item]
-#             print(NewDF)
-#             print('*'*80)
-
-#             for category in [NewDF['label']]:
-#                 # Filter based on the object ( category ) -> category id + ...
-#                 print(category)
-
-#             #   print(NewerDF)
-
-#                 bbox = [NewDF.xmin, NewDF.ymin, NewDF.xmax, NewDF.ymax]  # ...
-#                 print(bbox)
-
-#             #   image NAME + image FORMAT
-#             #   img_name = item.split('.')[0] #
-#             #   img_frmt = item.split('.')[1] #
-
-#             #   print(img_name, img_frmt)
-
-#             #   image ID ??
-#             #   image_id = item[-7:-4]
-
-#             #   label ID ??
-#             #   To do -> create a column in pandas.
-
-# im_0 = '3D_L0441_41.jpg'  # 4 objects lowest 3.
-# _whatever(im_0)
+    # print("__main__: Finished successfully!\n")

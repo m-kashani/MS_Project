@@ -1,0 +1,32 @@
+onecoralDict=
+{'file_name': '../Data/vott-csv-export/JPGImages/3D_L0441_41.jpg', 'image_id': 0, 'height': 2704, 'width': 1524, 'annotations': [
+        {'bbox': [
+                1771.9044368600685,
+                922.25870157385,
+                1984.1638225255965,
+                1184.2538589588378
+            ], 'bbox_mode': <BoxMode.XYXY_ABS: 0>, 'category_id': 5
+        },
+        {'bbox': [
+                1336.3112627986347,
+                93.8373940677966,
+                1687.0006825938567,
+                274.65095338983053
+            ], 'bbox_mode': <BoxMode.XYXY_ABS: 0>, 'category_id': 3
+        },
+        {'bbox': [
+                1395.3747440273034,
+                1147.3531325665856,
+                1519.038907849829,
+                1304.181219733656
+            ], 'bbox_mode': <BoxMode.XYXY_ABS: 0>, 'category_id': 3
+        },
+        {'bbox': [
+                1194.1897610921499,
+                483.39951573849885,
+                1380.6088737201364,
+                758.0504691283293
+            ], 'bbox_mode': <BoxMode.XYXY_ABS: 0>, 'category_id': 3
+        }
+    ]
+}

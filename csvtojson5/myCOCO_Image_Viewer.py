@@ -1,10 +1,14 @@
 # Taken from COCO_Image_Viewer.ipynb
 
+from detectron2.data import DatasetCatalog, MetadataCatalog
+from detectron2.structures import BoxMode
+import json
+import numpy as np
+import os
 from PIL import Image as PILImage  # used in display_image()
 from io import BytesIO  # used in display_image()
 
 from math import trunc  # used in display_image() -> bbox (xmin,ymin,xmax,ymax)
-
 import numpy as np  # used in display_image() np.multiply (1, ratio)
 
 import json  # json.load()
@@ -278,6 +282,7 @@ class CocoDataset():
 # json_soccer = '/Users/mac7/Desktop/MS_Project/csvtojson5/balloon/train/via_region_data.json'
 # train_soccer = '/Users/mac7/Desktop/MS_Project/csvtojson5/balloon/train'
 
+"""
 json_balloon = '/Users/mac7/Desktop/MS_Project/csvtojson5/balloon/train/via_region_data.json'
 train_balloon = '/Users/mac7/Desktop/MS_Project/csvtojson5/balloon/train/'
 
@@ -288,6 +293,7 @@ coco_dataset = CocoDataset(annotation_path, image_dir)
 coco_dataset.display_info()
 coco_dataset.display_licenses()
 coco_dataset.display_categories()
+"""
 
 # TODO:
 # Debug Error ...
@@ -299,3 +305,71 @@ coco_dataset.display_categories()
 #   File "myCOCO_Image_Viewer.py", line 234, in process_info
 #     self.info = self.coco['info']
 # KeyError: 'info'
+
+
+# if your dataset is in COCO format, this cell can be replaced by the following three lines:
+# from detectron2.data.datasets import register_coco_instances
+# register_coco_instances("my_dataset_train", {}, "json_annotation_train.json", "path/to/image/dir")
+# register_coco_instances("my_dataset_val", {}, "json_annotation_val.json", "path/to/image/dir")
+
+
+# TODO:
+# Write a function to convert the balloon_dict to the annotation.
+def get_balloon_dicts(img_dir):
+    import cv2
+    json_file = os.path.join(img_dir, "via_region_data.json")
+    with open(json_file) as f:
+        imgs_anns = json.load(f)
+
+    dataset_dicts = []
+    for idx, v in enumerate(imgs_anns.values()):
+        record = {}
+
+        filename = os.path.join(img_dir, v["filename"])
+        height, width = cv2.imread(filename).shape[:2]
+
+        record["file_name"] = filename
+        record["image_id"] = idx
+        record["height"] = height
+        record["width"] = width
+
+        annos = v["regions"]
+        objs = []
+        for _, anno in annos.items():
+            assert not anno["region_attributes"]
+            anno = anno["shape_attributes"]
+            px = anno["all_points_x"]
+            py = anno["all_points_y"]
+            poly = [(x + 0.5, y + 0.5) for x, y in zip(px, py)]
+            poly = [p for x in poly for p in x]
+
+            obj = {
+                "bbox": [np.min(px), np.min(py), np.max(px), np.max(py)],
+                "bbox_mode": BoxMode.XYXY_ABS,
+                "segmentation": [poly],
+                "category_id": 0,
+                "iscrowd": 0
+            }
+            objs.append(obj)
+        # This is for object annotations: [bbox,bbox_mode,category_id]
+        record["annotations"] = objs
+        dataset_dicts.append(record)
+    # This is for the
+
+    return dataset_dicts
+
+
+BALLOON_PATH = '/Users/mac7/Desktop/MS_Project/csvtojson5/balloon/'
+print(get_balloon_dicts(BALLOON_PATH + 'train'))
+# print('\nOne sample:\n', get_balloon_dicts(BALLOON_PATH + 'train')[:2])
+
+
+# TODO:
+THING_CLASSES = ['Past', 'SeaRods', 'Apalm', 'Antillo', 'Other_Coral',
+                 'Fish', 'Galaxaura', 'Orb', 'Gorgonia', 'Ssid']
+for d in ["train", "val"]:
+    DatasetCatalog.register(
+        "balloon_" + d, lambda d=d: get_balloon_dicts(BALLOON_PATH + d))
+    MetadataCatalog.get("balloon_" + d).set(thing_classes=THING_CLASSES)
+balloon_metadata = MetadataCatalog.get("balloon_train")
+# print(balloon_metadata)
