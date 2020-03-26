@@ -90,8 +90,8 @@ def cropper(imageList):
     """
 
     # Different Classes.
-    classes = ['Past', 'SeaRods', 'Apalm', 'Antillo', 'Other_Coral',
-               'Fish', 'Galaxaura', 'Orb', 'Gorgonia', 'Ssid']
+    classes = ['Past', 'Gorgonia', 'SeaRods', 'Antillo', 'Fish',
+               'Ssid', 'Orb', 'Other_Coral', 'Apalm', 'Galaxaura']
 
     parent_dir, list_Of_DirsInside = create_directories(classes)
     # print(parent_dir, list_Of_DirsInside[0])  # Test

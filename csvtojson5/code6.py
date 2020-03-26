@@ -101,45 +101,32 @@ def data_dict():
 # print(data_dict(), '\n\n\n\n') # TEST
 
 
-def data_dict2():
-    width = 102
-    height = 102
-
-    for IMG_id, fn in enumerate('3D_L0441_41.jpg'):
-        image_id = IMG_id  # 4 objects lowest 3.
-        file_name = fn  # For example -> enum()
-
-    xmin = 72
-    ymin = 32
-    xmax = 102
-    ymax = 72
-    bbox = [xmin, ymin, xmax, ymax]
-    BBOX_MODE = BoxMode.XYXY_ABS  # CONSTANT.
-
-    object_id = 366
-    THING_CLASSES = ['Past', 'SeaRods', 'Apalm', 'Antillo', 'Other_Coral',
-                     'Fish', 'Galaxaura', 'Orb', 'Gorgonia', 'Ssid']
-    #    category_id = THING_CLASSES.index(imgs_anns["label"][object_id])
-    index = 9
-    category_id = index  # you need to label it as well.
-
-    return [{
-        'file_name': fn,
-        'image_id': image_id,
-        'height': height,
-            'width': width,
-            'annotations': [{
-                'bbox': bbox,
-                'bbox_mode': BoxMode.XYXY_ABS,
-                'category_id': index,
-            }]
-            }]
-
-# print(data_dict2(), '\n\n\n\n') # TEST
-
-
-def _json_annotation_v2():
+def list_of_images(JPGPATH):
     """
+    Arg: JPGPATH
+
+    Return: listOf_images for creating the xml files.
+
+    Used also in code5,.py
+    """
+    import os
+    listOF_imgs = []
+    # r=root, d=directories, f = files
+    for r, d, f in os.walk(JPGPATH):
+        for file in f:
+            if '.jpg' in file:
+                listOF_imgs.append(os.path.join(file))
+
+    return listOF_imgs
+
+
+# LIMG = list_of_images(JPG_PATH)
+# print(LIMG)
+
+
+def _get_coral_dicts():
+    """
+    ['Past', 'Gorgonia', 'SeaRods', 'Antillo', 'Fish', 'Ssid', 'Orb', 'Other_Coral', 'Apalm', 'Galaxaura']
     366,3D_L0441_41.jpg,1771.9044368600685,922.25870157385,1984.1638225255965,1184.2538589588378,Ssid,261.9951573849878,212.25938566552804,55610.93115388085,0.013494864018378733
     367,3D_L0441_41.jpg,1336.3112627986347,93.8373940677966,1687.0006825938567,274.65095338983053,Antillo,180.81355932203394,350.68941979522197,63409.40220975303,0.01538728524324638
     368,3D_L0441_41.jpg,1395.3747440273034,1147.3531325665856,1519.038907849829,1304.181219733656,Antillo,156.8280871670704,123.66416382252555,19394.01426340191,0.004706261517738354
@@ -147,11 +134,13 @@ def _json_annotation_v2():
     """
 
     imgs_anns = makeDF(CSV_PATH)
+    # print(type(imgs_anns))
 
     THING_CLASSES = list(imgs_anns.label.unique())
+    # print(THING_CLASSES)
 
     datadict = []
-    for IMG_id, fn in enumerate(['3D_L0441_41.jpg']):
+    for IMG_id, fn in enumerate(list_of_images(JPG_PATH)):
         record = {}
 
         HEIGHT = 2704
@@ -164,7 +153,9 @@ def _json_annotation_v2():
         record['width'] = WIDTH
 
         objs = []
-        for object_id in [366, 367, 368, 369]:
+        # print(imgs_anns[imgs_anns['image'] == fn].iterrows())  # Test
+        for object_id, _ in imgs_anns[imgs_anns['image'] == fn].iterrows():
+            # print(object_id, _) # Test
 
             xmin = imgs_anns["xmin"][object_id]
             ymin = imgs_anns["ymin"][object_id]
@@ -175,7 +166,7 @@ def _json_annotation_v2():
             BBOX_MODE = BoxMode.XYXY_ABS  # CONSTANT.
 
             category_id = THING_CLASSES.index(imgs_anns["label"][object_id])
-            # print(category_id)
+            # print(imgs_anns['label'][object_id], category_id)
 
             obj = {
                 'bbox': bbox,
@@ -190,7 +181,7 @@ def _json_annotation_v2():
     return datadict
 
 
-print(_json_annotation_v2())
+print(_get_coral_dicts())
 
 
 def to_json():
@@ -230,75 +221,20 @@ def to_json():
         .
         .
     """
-    THING_CLASSES = ['Past', 'SeaRods', 'Apalm', 'Antillo', 'Other_Coral',
-                     'Fish', 'Galaxaura', 'Orb', 'Gorgonia', 'Ssid']
+    THING_CLASSES = ['Past', 'Gorgonia', 'SeaRods', 'Antillo',
+                     'Fish', 'Ssid', 'Orb', 'Other_Coral', 'Apalm', 'Galaxaura']
     # 1
-    DatasetCatalog.register('coraltest', _json_annotation_v2)
+    DatasetCatalog.register('coraltest', _get_coral_dicts)
     # 2  Metadata(name='test', thing_classes=['first'])
     MetadataCatalog.get('coraltest').set(thing_classes=THING_CLASSES)
     # 3
     convert_to_coco_json('coraltest', output_file='./output',
                          allow_cached=False)  # output_folder -> output_file
 
-    # last line:
     # print("to_json():", "Finished successfully!")
 
 
-def get_coral_dicts():
-
-    THING_CLASSES = ['Past', 'SeaRods', 'Apalm', 'Antillo', 'Other_Coral',
-                     'Fish', 'Galaxaura', 'Orb', 'Gorgonia', 'Ssid']
-    # print(object_id, ': ', THING_CLASSES)
-
-    imgs_anns = makeDF(CSV_PATH)
-    dataset_dict = []
-
-    # object_id = range(366, 371)
-    object_id = 366
-
-    fn = imgs_anns["image"][object_id]  # Cool.
-    # height, width = cv2.imread(filename).shape[:2] :TODO?
-    width = 2704
-    height = 1524
-    # print(width, height)
-
-    xmin = imgs_anns["xmin"][object_id]
-    ymin = imgs_anns["ymin"][object_id]
-    xmax = imgs_anns["xmax"][object_id]
-    ymax = imgs_anns["ymax"][object_id]
-
-    # TODO: Put this inside the object loop #FOR OBJECT ID in NEWDF.
-    bbox = [xmin, ymin, xmax, ymax]
-    # print(bbox)
-    BBOX_MODE = BoxMode.XYXY_ABS  # CONSTANT.
-    category_id = THING_CLASSES.index(imgs_anns["label"][object_id])
-    # print(category_id)
-
-    # print('get_coral_dict(object_id):, Finished Successfully!')
-
-    return [{
-        'file_name': fn,
-        'image_id': object_id,
-        'height': height,
-            'width': width,
-            'annotations': [{
-                'bbox': bbox,
-                'bbox_mode': BBOX_MODE,
-                'category_id': category_id,
-            }]
-            }]
-
-
 # TODO:
-# Put this in a for loop.
-object_id = 366
-THING_CLASSES = ['Past', 'SeaRods', 'Apalm', 'Antillo', 'Other_Coral',
-                 'Fish', 'Galaxaura', 'Orb', 'Gorgonia', 'Ssid']
-# print(object_id, ': ', THING_CLASSES)
-
-im_0 = ['3D_L0441_41.jpg']  # 4 objects lowest 3
-
-
 if __name__ == '__main__':
     to_json()
     # print("__main__: Finished successfully!\n")
