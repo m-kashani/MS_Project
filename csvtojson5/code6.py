@@ -16,10 +16,6 @@ jpg1_str = 'A_3D_L0646_144.jpg'
 CSV_PATH = "../Data/Annotations/FL_Keys_Coral-export.csv"
 JPG_PATH = '../Data/vott-csv-export/JPGImages/'
 
-# List of images for later on tests.
-imagelist1 = ['A_3D_L0646_144.jpg', '3D_L0622_176.jpg', '3R010215_829.jpg',
-              '3D_L0622_139.jpg', 'B_3D_L0647_42.jpg']  # To do later on 5 different images.
-
 
 def makeDF(csv_path):
     """ Read a comma-separated values (.csv) file into DataFrame.
@@ -49,58 +45,6 @@ def makeDF(csv_path):
 # DF = makeDF(csv_path=CSV_PATH)
 
 
-def data_dict0():
-    """
-    generated from code7.py. However, is not compatible with the
-    25, in convert_to_coco_json
-    coco_dict = convert_to_coco_dict(dataset_name)
-    File "/Users/mac7/opt/anaconda3/envs/myenvpy/lib/python3.7/site-packages/detectron2-0.1.1-py3.7-macosx-10.9-x86_64.egg/detectron2/data/datasets/coco.py", line 314, in convert_to_coco_dict
-    "width": image_dict["width"],
-    KeyError: 'width'
-    """
-
-    # 0- Sample from detectron2 -> 5 different sections.
-    info_val0 = [{"date_created": "2020-03-15 04:59:45.442988",
-                  "description": "Automatically generated COCO json file for Detectron2."}]
-    images0 = [{"id": "image", "width": 100,
-                "height": 100, "file_name": "image.png"}]
-    annotations0 = [{"id": 1, "image_id": "image", "bbox": [70.0, 30.0, 30.0, 40.0],
-                     "area": 1200.0, "iscrowd": 0, "category_id": 0}]
-    categories0 = [{"id": 0, "name": "first"}]
-    licence0 = 'null'
-
-    return [{"info": info_val0,
-             "images": images0,
-             "annotations": annotations0,
-             "categories": categories0,
-             "licenses": licence0}]
-
-# print(data_dict0(), '\n\n\n') # test above function.
-
-
-def data_dict():
-    """
-    This is just a sample dictionary to test the detectron.
-    I took it from:
-    https://github.com/facebookresearch/detectron2/issues/349
-    """
-    # it handles the 'iscrowd' itself.
-    print("\ndata_dict(): ", "Finished successfully!")
-    return [{
-        'file_name': 'image.png',
-        'image_id': 'image',
-        'height': 100,
-        'width': 100,
-        'annotations': [{
-            'bbox': [70, 30, 100, 70],
-            'bbox_mode': BoxMode.XYXY_ABS,
-            'category_id': 0
-        }]
-    }]
-
-# print(data_dict(), '\n\n\n\n') # TEST
-
-
 def list_of_images(JPGPATH):
     """
     Arg: JPGPATH
@@ -123,15 +67,7 @@ def list_of_images(JPGPATH):
 # LIMG = list_of_images(JPG_PATH)
 # print(LIMG)
 
-
 def _get_coral_dicts():
-    """
-    ['Past', 'Gorgonia', 'SeaRods', 'Antillo', 'Fish', 'Ssid', 'Orb', 'Other_Coral', 'Apalm', 'Galaxaura']
-    366,3D_L0441_41.jpg,1771.9044368600685,922.25870157385,1984.1638225255965,1184.2538589588378,Ssid,261.9951573849878,212.25938566552804,55610.93115388085,0.013494864018378733
-    367,3D_L0441_41.jpg,1336.3112627986347,93.8373940677966,1687.0006825938567,274.65095338983053,Antillo,180.81355932203394,350.68941979522197,63409.40220975303,0.01538728524324638
-    368,3D_L0441_41.jpg,1395.3747440273034,1147.3531325665856,1519.038907849829,1304.181219733656,Antillo,156.8280871670704,123.66416382252555,19394.01426340191,0.004706261517738354
-    369,3D_L0441_41.jpg,1194.1897610921499,483.39951573849885,1380.6088737201364,758.0504691283293,Antillo,274.6509533898304,186.41911262798658,51200.18701336269,0.01242452782437671
-    """
 
     imgs_anns = makeDF(CSV_PATH)
     # print(type(imgs_anns))
@@ -143,11 +79,11 @@ def _get_coral_dicts():
     for IMG_id, fn in enumerate(list_of_images(JPG_PATH)):
         record = {}
 
-        HEIGHT = 2704
-        WIDTH = 1524
+        HEIGHT = 1524
+        WIDTH = 2704
         # print(width, height)
 
-        record['file_name'] = JPG_PATH + fn  # 4 objects lowest 3.
+        record['file_name'] = fn  # 4 objects lowest 3.
         record['image_id'] = IMG_id + 1
         record['height'] = HEIGHT
         record['width'] = WIDTH
