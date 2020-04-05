@@ -11,6 +11,9 @@
 *.ipynb
 result.html
 
+Data/Other/
+BoudingBox 2/
+
 csvtojson5/Annotations
 csvtojson5/pycococreator
 csvtojson5/detectron2
