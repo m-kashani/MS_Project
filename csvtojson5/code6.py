@@ -109,6 +109,10 @@ def _get_coral_dicts():
                 'bbox_mode': BBOX_MODE,
                 'category_id': category_id,
             }
+            """
+            #TODO:
+            I can say: 'segmentation': <input that he can provide.
+            """
             objs.append(obj)
             record['annotations'] = objs
 

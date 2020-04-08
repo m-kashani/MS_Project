@@ -1,7 +1,7 @@
 # Preprocessing and trying to intensify the red.
 
 import pandas as pd
-from PIL import Image,ImageDraw,ImageFont
+from PIL import Image, ImageDraw, ImageFont
 import cv2
 import numpy as np
 from PIL import Image
@@ -14,10 +14,10 @@ jpg1_str = 'A_3D_L0646_144.jpg'
 
 #cv2.imwrite(str(JPGImagesPATH)+str(jpg1_str), im_cv)
 #pil_img = Image.fromarray(im_cv)
-#pil_img.save('preprocessing'+str(jpg1_str)+'.jpg')
+# pil_img.save('preprocessing'+str(jpg1_str)+'.jpg')
 
- ## Simplest color balancing
-    # https://gist.github.com/hobson/e3b8805a558d974d48336e133dfb2bbd#file-simple_cb-py
+# Simplest color balancing
+# https://gist.github.com/hobson/e3b8805a558d974d48336e133dfb2bbd#file-simple_cb-py
 
 """ White balance (color balance)
 Adjust colors to flatten color histogram peaks and broaden color spectrum for better color contrast.
@@ -32,8 +32,7 @@ Dependencies:
   - Python >= 2.7.8
   - OpenCV == 2.4.10
 """
-import numpy as np
-import cv2
+
 
 def apply_mask(matrix, mask, fill_value):
     masked = np.ma.array(matrix, mask=mask, fill_value=fill_value)
@@ -91,7 +90,8 @@ def simple_colorbalance(img, percent):
         thresholded = apply_threshold(channel, low_val, high_val)
 
         # scale the channel
-        normalized = cv2.normalize(thresholded, thresholded.copy(), 0, 255, cv2.NORM_MINMAX)
+        normalized = cv2.normalize(
+            thresholded, thresholded.copy(), 0, 255, cv2.NORM_MINMAX)
         out_channels.append(normalized)
 
     return cv2.merge(out_channels)
@@ -100,3 +100,5 @@ def simple_colorbalance(img, percent):
 if __name__ == '__main__':
     import doctest
     doctest.testmod()
+
+# TODO: preprocessing one image and applying multiple filters and generating new photos to test.

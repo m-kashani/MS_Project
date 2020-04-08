@@ -6,8 +6,8 @@ from PIL import Image, ImageDraw, ImageFont
 import pandas as pd
 import os
 
-CSV_PATH = "../Data/Annotations/FL_Keys_Coral-export.csv"
-JPGPATH = '../Data/vott-csv-export/JPGImages/'
+CSV_PATH = "./Data/Annotations/FL_Keys_Coral-export.csv"
+JPGPATH = './Data/vott-csv-export/JPGImages/'
 
 
 def list_of_images(JPGPATH):

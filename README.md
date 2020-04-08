@@ -32,6 +32,8 @@ Annotations:
  - [ ] Preprocessing the red images. `code6.py`.
  - [ ] Figuring out the code for evaluation.
 
+ - [ ] Add the detectron dependencies to the setup.py -> https://github.com/facebookresearch/detectron2/network/dependencies
+
  - [ ] FlowerDetection -> ALDI
  - [ ] Zeidan -> ImageProcessing Proj
 
