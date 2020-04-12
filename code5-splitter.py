@@ -57,7 +57,9 @@ def create_categorical_dataset(IMG_PATH):
 
     for ii, cat in enumerate(category_list):
         # Used for the Cropped_Objects (Labeled with folders.)
-        src_path = IMG_PATH + '/' + cat
+        src_path = IMG_PATH + cat
+        # print(src_path)
+
         dest_dir1 = IMG_PATH + 'SPLITTED_OBJECTs/'+'train/'
         dest_dir2 = IMG_PATH + 'SPLITTED_OBJECTs/'+'valid/'
         dest_dir3 = IMG_PATH + 'SPLITTED_OBJECTs/'+'test/'
@@ -103,10 +105,6 @@ def ImageSplitter():
     # Function to split files in ONE directory into trainning, validation and testing set.
     """
 
-    # Path Configuration.
-    enhanced_objects_PATH = '/Users/mac7/Desktop/MS_Project/Data/Enhanced'
-    IMG_PATH = enhanced_objects_PATH
-
     # Define proportion of data.
     train_prop = 0.8
     valid_prop = test_prop = (1-train_prop)/2
@@ -147,18 +145,31 @@ def ImageSplitter():
 
 
 if __name__ == "__main__":
-
-    # Path Configuration.
+    """
+    # Path Configuration _ 1
     IMG_PATH_Cropped = '/Users/mac7/Desktop/MS_Project/Data/Cropped_Objects/'
     CROPPED_OBJECTS_PATH = './Data/Cropped_Objects/'
 
     # Create training, validation, testing directories inside the SPLITTED_OBJECTs directory.
     parent_dir = './Data/Cropped_Objects/SPLITTED_OBJECTs/'
-    parent_dir, list_Of_DirsInside = create_directories(parent_dir=parent_dir,
-                                                        list_Of_DirsInside=['test', 'train', 'valid'])
+
+    parent_dir, list_Of_DirsInside = create_directories(
+        parent_dir=parent_dir, list_Of_DirsInside=['test', 'train', 'valid'])
     print('parent_dir:', parent_dir, '\nlist_of_DirsInsied:', list_Of_DirsInside)
 
     create_categorical_dataset(IMG_PATH_Cropped)
+    """
+    # --------------------------------------------------------------------------------
 
-    # ImageSplitter()
-    # print('Dr Azarakhsh Mokri!')
+    # Path Configuration _ 2
+    IMG_PATH_Object_Enhanced = '/Users/mac7/Desktop/MS_Project/Data/Enhanced/'
+    ENGANCED_IMG_PATH = './Data/Enhanced/'
+
+    # Create training, validation, testing directories inside the SPLITTED_OBJECTs directory.
+    parent_dir = './Data/Enhanced/SPLITTED_OBJECTs/'
+
+    parent_dir, list_Of_DirsInside = create_directories(
+        parent_dir=parent_dir, list_Of_DirsInside=['test', 'train', 'valid'])
+    print('parent_dir:', parent_dir, '\nlist_of_DirsInsied:', list_Of_DirsInside)
+
+    ImageSplitter()
