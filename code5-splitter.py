@@ -6,10 +6,6 @@ import math  # split calculate
 import shutil  # copy images to train, test and valid dirs
 import json  # create the
 
-# Define proportion of data.
-train_prop = 0.6
-valid_prop = test_prop = (1-train_prop)/2
-
 
 def create_directories(list_Of_DirsInside, parent_dir):
     """
@@ -36,9 +32,10 @@ def create_directories(list_Of_DirsInside, parent_dir):
     return parent_dir, list_Of_DirsInside
 
 
-def create_categorical_dataset(IMG_PATH):
+def create_categorical_dataset(IMG_PATH, train_prop):
     """
     # Cropped_Objects.
+
     # function to split data of each category into trainning, validation and testing set.
     """
 
@@ -54,6 +51,9 @@ def create_categorical_dataset(IMG_PATH):
 
     category_list = get_category_folder_list(IMG_PATH)
     print('\nCATEGORY_LIST:\n', category_list)
+
+    # Define proportion of data.
+    valid_prop = test_prop = (1-train_prop)/2
 
     for ii, cat in enumerate(category_list):
         # Used for the Cropped_Objects (Labeled with folders.)
@@ -99,21 +99,20 @@ def create_categorical_dataset(IMG_PATH):
     print('\ncreate_categorical_dataset is finished. -> Congrates!')
 
 
-def ImageSplitter():
+def ImageSplitter(IMG_PATH_Object_Enhanced, train_prop):
     """
     # Given the enhanced images ( Preprocessed Images).
     # Function to split files in ONE directory into trainning, validation and testing set.
     """
 
     # Define proportion of data.
-    train_prop = 0.8
     valid_prop = test_prop = (1-train_prop)/2
 
-    SRC_PATH = '/Users/mac7/Desktop/MS_Project/Data/Enhanced/'
+    SRC_PATH = IMG_PATH_Object_Enhanced
 
-    DEST_DIR1 = '/Users/mac7/Desktop/MS_Project/Data/Enhanced/SPLITTED_OBJECTs/train/'
-    DEST_DIR2 = '/Users/mac7/Desktop/MS_Project/Data/Enhanced/SPLITTED_OBJECTs/valid/'
-    DEST_DIR3 = '/Users/mac7/Desktop/MS_Project/Data/Enhanced/SPLITTED_OBJECTs/test/'
+    DEST_DIR1 = IMG_PATH_Object_Enhanced+'SPLITTED_OBJECTs/train/'
+    DEST_DIR2 = IMG_PATH_Object_Enhanced+'SPLITTED_OBJECTs/valid/'
+    DEST_DIR3 = IMG_PATH_Object_Enhanced+'SPLITTED_OBJECTs/test/'
 
     DEST_DIRS_LIST = [DEST_DIR1, DEST_DIR2, DEST_DIR3]
     print(DEST_DIRS_LIST)  # Test.
@@ -145,6 +144,7 @@ def ImageSplitter():
 
 
 if __name__ == "__main__":
+
     """
     # Path Configuration _ 1
     IMG_PATH_Cropped = '/Users/mac7/Desktop/MS_Project/Data/Cropped_Objects/'
@@ -157,10 +157,10 @@ if __name__ == "__main__":
         parent_dir=parent_dir, list_Of_DirsInside=['test', 'train', 'valid'])
     print('parent_dir:', parent_dir, '\nlist_of_DirsInsied:', list_Of_DirsInside)
 
-    create_categorical_dataset(IMG_PATH_Cropped)
+    create_categorical_dataset(IMG_PATH_Cropped, train_prop=0.5)
     """
-    # --------------------------------------------------------------------------------
 
+    # """
     # Path Configuration _ 2
     IMG_PATH_Object_Enhanced = '/Users/mac7/Desktop/MS_Project/Data/Enhanced/'
     ENGANCED_IMG_PATH = './Data/Enhanced/'
@@ -172,4 +172,5 @@ if __name__ == "__main__":
         parent_dir=parent_dir, list_Of_DirsInside=['test', 'train', 'valid'])
     print('parent_dir:', parent_dir, '\nlist_of_DirsInsied:', list_Of_DirsInside)
 
-    ImageSplitter()
+    ImageSplitter(IMG_PATH_Object_Enhanced, train_prop=0.8)
+    # """

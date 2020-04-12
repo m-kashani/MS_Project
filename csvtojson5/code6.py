@@ -14,7 +14,17 @@ jpg1_str = 'A_3D_L0646_144.jpg'
 """
 
 CSV_PATH = "../Data/Annotations/FL_Keys_Coral-export.csv"
-JPG_PATH = '../Data/vott-csv-export/JPGImages/'
+IMGs_PATH = "../Data/vott-csv-export/JPGImages/"
+
+Enhanced_train = "../Data/Enhanced/SPLITTED_OBJECTs/train/"
+Enhanced_test = "/Users/mac7/Desktop/MS_Project/Data/Enhanced/SPLITTED_OBJECTs/test/"
+Enhanced_valid = "/Users/mac7/Desktop/MS_Project/Data/Enhanced/SPLITTED_OBJECTs/valid/"
+
+# IMGs_PATH = Enhanced_train
+
+# List of images for later on tests.
+imagelist1 = ['A_3D_L0646_144.jpg', '3D_L0622_176.jpg', '3R010215_829.jpg',
+              '3D_L0622_139.jpg', 'B_3D_L0647_42.jpg']  # To do later on 5 different images.
 
 
 def makeDF(csv_path):
@@ -45,6 +55,35 @@ def makeDF(csv_path):
 # DF = makeDF(csv_path=CSV_PATH)
 
 
+def data_dict0():
+    """
+    generated from code7.py. However, is not compatible with the
+    25, in convert_to_coco_json
+    coco_dict = convert_to_coco_dict(dataset_name)
+    File "/Users/mac7/opt/anaconda3/envs/myenvpy/lib/python3.7/site-packages/detectron2-0.1.1-py3.7-macosx-10.9-x86_64.egg/detectron2/data/datasets/coco.py", line 314, in convert_to_coco_dict
+    "width": image_dict["width"],
+    KeyError: 'width'
+    """
+
+    # 0- Sample from detectron2 -> 5 different sections.
+    info_val0 = [{"date_created": "2020-03-15 04:59:45.442988",
+                  "description": "Automatically generated COCO json file for Detectron2."}]
+    images0 = [{"id": "image", "width": 100,
+                "height": 100, "file_name": "image.png"}]
+    annotations0 = [{"id": 1, "image_id": "image", "bbox": [70.0, 30.0, 30.0, 40.0],
+                     "area": 1200.0, "iscrowd": 0, "category_id": 0}]
+    categories0 = [{"id": 0, "name": "first"}]
+    licence0 = 'null'
+
+    return [{"info": info_val0,
+             "images": images0,
+             "annotations": annotations0,
+             "categories": categories0,
+             "licenses": licence0}]
+
+# print(data_dict0(), '\n\n\n') # test above function.
+
+
 def list_of_images(JPGPATH):
     """
     Arg: JPGPATH
@@ -58,14 +97,15 @@ def list_of_images(JPGPATH):
     # r=root, d=directories, f = files
     for r, d, f in os.walk(JPGPATH):
         for file in f:
-            if '.jpg' in file:
+            if '.jpg' in file or '.png' in file:
                 listOF_imgs.append(os.path.join(file))
 
     return listOF_imgs
 
 
-# LIMG = list_of_images(JPG_PATH)
+# LIMG = list_of_images(IMGs_PATH)
 # print(LIMG)
+
 
 def _get_coral_dicts():
 
@@ -76,14 +116,14 @@ def _get_coral_dicts():
     # print(THING_CLASSES)
 
     datadict = []
-    for IMG_id, fn in enumerate(list_of_images(JPG_PATH)):
+    for IMG_id, fn in enumerate(list_of_images(IMGs_PATH)):
         record = {}
 
         HEIGHT = 1524
         WIDTH = 2704
         # print(width, height)
 
-        record['file_name'] = fn  # 4 objects lowest 3.
+        record['file_name'] = fn.split('.')[0]+'.png'  # 4 objects lowest 3.
         record['image_id'] = IMG_id + 1
         record['height'] = HEIGHT
         record['width'] = WIDTH
@@ -109,10 +149,6 @@ def _get_coral_dicts():
                 'bbox_mode': BBOX_MODE,
                 'category_id': category_id,
             }
-            """
-            #TODO:
-            I can say: 'segmentation': <input that he can provide.
-            """
             objs.append(obj)
             record['annotations'] = objs
 
@@ -140,7 +176,7 @@ def to_json():
             name (str): the name that identifies a dataset, e.g. "coco_2014_train".
 
         Returns:
-            list[dict]: dataset annotations.0
+            list[dict]: dataset annotations.
 
         A class that supports simple attribute setter/getter.
         It is intended for storing metadata of a dataset and make it accessible globally.
@@ -153,7 +189,7 @@ def to_json():
         MetadataCatalog.get("mydataset").thing_classes = ["person", "dog"]
 
         somewhere when you print statistics or visualize:
-        classes = MetadataCatalog.get("mydataset").thing_classes
+        classes = MetadataCatalog.get("mydataset").thing_classes.
 
     3 :
         Convert it to the coco.
