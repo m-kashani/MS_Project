@@ -20,7 +20,9 @@ Enhanced_train = "../Data/Enhanced/SPLITTED_OBJECTs/train/"
 Enhanced_test = "/Users/mac7/Desktop/MS_Project/Data/Enhanced/SPLITTED_OBJECTs/test/"
 Enhanced_valid = "/Users/mac7/Desktop/MS_Project/Data/Enhanced/SPLITTED_OBJECTs/valid/"
 
-# IMGs_PATH = Enhanced_train
+IMG_FORMAT = '.png'  # '.jpg'
+
+IMGs_PATH = Enhanced_valid
 
 # List of images for later on tests.
 imagelist1 = ['A_3D_L0646_144.jpg', '3D_L0622_176.jpg', '3R010215_829.jpg',
@@ -122,15 +124,16 @@ def _get_coral_dicts():
         HEIGHT = 1524
         WIDTH = 2704
         # print(width, height)
-
-        record['file_name'] = fn.split('.')[0]+'.png'  # 4 objects lowest 3.
+        image_name = fn.split('.')[0]
+        record['file_name'] = image_name + IMG_FORMAT
         record['image_id'] = IMG_id + 1
         record['height'] = HEIGHT
         record['width'] = WIDTH
 
         objs = []
         # print(imgs_anns[imgs_anns['image'] == fn].iterrows())  # Test
-        for object_id, _ in imgs_anns[imgs_anns['image'] == fn].iterrows():
+        # print(image_name)
+        for object_id, _ in imgs_anns[imgs_anns['image'] == (image_name+'.jpg')].iterrows():
             # print(object_id, _) # Test
 
             xmin = imgs_anns["xmin"][object_id]
@@ -204,7 +207,7 @@ def to_json():
     # 2  Metadata(name='test', thing_classes=['first'])
     MetadataCatalog.get('coraltest').set(thing_classes=THING_CLASSES)
     # 3
-    convert_to_coco_json('coraltest', output_file='./output',
+    convert_to_coco_json('coraltest', output_file='./output.json',
                          allow_cached=False)  # output_folder -> output_file
 
     # print("to_json():", "Finished successfully!")
