@@ -82,18 +82,18 @@ def data_dict0():
 # print(data_dict0(), '\n\n\n') # test above function.
 
 
-def list_of_images(JPGPATH):
+def list_of_images(IMGs_PATH):
     """
-    Arg: JPGPATH
+    Arg: Path to the images.
 
-    Return: listOf_images for creating the xml files.
+    Return: listOf .jpg and .png images for creating the .xml/.json files.
 
     Used also in code5,.py
     """
     import os
     listOF_imgs = []
     # r=root, d=directories, f = files
-    for r, d, f in os.walk(JPGPATH):
+    for r, d, f in os.walk(IMGs_PATH):
         for file in f:
             if '.jpg' in file or '.png' in file:
                 listOF_imgs.append(os.path.join(file))
