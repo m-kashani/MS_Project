@@ -17,8 +17,8 @@ ENHANCED_PATH_valid = "/Users/mac7/Desktop/MS_Project/Data/Enhanced/SPLITTED_OBJ
 
 # TODO: Making a loop mabe ... (automating it.)
 IMG_FORMAT = '.png'  # '.jpg'
-IMGs_PATH = ENHANCED_PATH_valid
-OP = './enhanced_valid.json'
+IMGs_PATH = ENHANCED_PATH_train
+OP = './enhanced_train.json'
 
 # List of images for later on tests.
 imagelist1 = ['A_3D_L0646_144.jpg', '3D_L0622_176.jpg', '3R010215_829.jpg',

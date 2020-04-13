@@ -14,7 +14,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from PIL import Image  # http://effbot.org/imagingbook/introduction.html
 
-CSV_PATH = "./Data/Annotations/FL_Keys_Coral-export.csv"
+# CSV_PATH = "./Data/Annotations/FL_Keys_Coral-export.csv"
+CSV_PATH = "/Users/mac7/Desktop/MS_Project/validationDF.csv"
 
 
 def makeDF(csv_path):
