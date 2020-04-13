@@ -8,21 +8,17 @@ from detectron2.structures import Boxes, BoxMode, PolygonMasks
 from detectron2.data import MetadataCatalog, DatasetCatalog
 from detectron2.data.datasets.coco import convert_to_coco_json
 
-""" Path and image names.
-JPGImagesPATH = './Data/vott-csv-export/JPGImages/'
-jpg1_str = 'A_3D_L0646_144.jpg'
-"""
-
 CSV_PATH = "../Data/Annotations/FL_Keys_Coral-export.csv"
-IMGs_PATH = "../Data/vott-csv-export/JPGImages/"
 
-Enhanced_train = "../Data/Enhanced/SPLITTED_OBJECTs/train/"
-Enhanced_test = "/Users/mac7/Desktop/MS_Project/Data/Enhanced/SPLITTED_OBJECTs/test/"
-Enhanced_valid = "/Users/mac7/Desktop/MS_Project/Data/Enhanced/SPLITTED_OBJECTs/valid/"
+ENHANCED_PATH = "../Data/Enhanced/"
+ENHANCED_PATH_train = "../Data/Enhanced/SPLITTED_OBJECTs/train/"
+ENHANCED_PATH_valid = "/Users/mac7/Desktop/MS_Project/Data/Enhanced/SPLITTED_OBJECTs/val/"
+# Enhanced_test = "/Users/mac7/Desktop/MS_Project/Data/Enhanced/SPLITTED_OBJECTs/test/" not implemented
 
+# TODO: Making a loop mabe ... (automating it.)
 IMG_FORMAT = '.png'  # '.jpg'
-
-IMGs_PATH = Enhanced_valid
+IMGs_PATH = ENHANCED_PATH_valid
+OP = './enhanced_valid.json'
 
 # List of images for later on tests.
 imagelist1 = ['A_3D_L0646_144.jpg', '3D_L0622_176.jpg', '3R010215_829.jpg',
@@ -203,11 +199,11 @@ def to_json():
     THING_CLASSES = ['Past', 'Gorgonia', 'SeaRods', 'Antillo',
                      'Fish', 'Ssid', 'Orb', 'Other_Coral', 'Apalm', 'Galaxaura']
     # 1
-    DatasetCatalog.register('coraltest', _get_coral_dicts)
+    DatasetCatalog.register('coral', _get_coral_dicts)
     # 2  Metadata(name='test', thing_classes=['first'])
-    MetadataCatalog.get('coraltest').set(thing_classes=THING_CLASSES)
+    MetadataCatalog.get('coral').set(thing_classes=THING_CLASSES)
     # 3
-    convert_to_coco_json('coraltest', output_file='./output.json',
+    convert_to_coco_json('coral', output_file=OP,
                          allow_cached=False)  # output_folder -> output_file
 
     # print("to_json():", "Finished successfully!")
