@@ -11,14 +11,14 @@ from detectron2.data.datasets.coco import convert_to_coco_json
 CSV_PATH = "../Data/Annotations/FL_Keys_Coral-export.csv"
 
 ENHANCED_PATH = "../Data/Enhanced/"
-ENHANCED_PATH_train = "../Data/Enhanced/SPLITTED_OBJECTs/train/"
-ENHANCED_PATH_valid = "/Users/mac7/Desktop/MS_Project/Data/Enhanced/SPLITTED_OBJECTs/val/"
+ENHANCED_PATH_train = "../Data/Enhanced/Enhanced_Splitted/train/"
+ENHANCED_PATH_valid = "../Data/Enhanced/Enhanced_Splitted/val/"
 # Enhanced_test = "/Users/mac7/Desktop/MS_Project/Data/Enhanced/SPLITTED_OBJECTs/test/" not implemented
 
 # TODO: Making a loop mabe ... (automating it.)
 IMG_FORMAT = '.png'  # '.jpg'
-IMGs_PATH = ENHANCED_PATH_train
-OP = './enhanced_train.json'
+IMGs_PATH = ENHANCED_PATH_valid
+OP = './enhanced_valid.json'
 
 # List of images for later on tests.
 imagelist1 = ['A_3D_L0646_144.jpg', '3D_L0622_176.jpg', '3R010215_829.jpg',
