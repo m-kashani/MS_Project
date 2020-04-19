@@ -30,9 +30,8 @@ Annotations:
  - [ ] Figuring out the code for evaluation.
  - [x] Pixel-wise annotation tool and segmentation taks -> Labelme.
  - [ ] Start writing the report!
-
+ - [x] Yolo2 vs Yolo3.
  - [ ] mmdetectron.
- - [ ] Yolo?.
  - [ ] Running the detectron2 colab in `code8.py`. -> GPU is needed.
  - [ ] Creating the binary mask for the images created in `code5.py` for later on -> pycoco
  - [ ] Figuring out the rotation and zooming in zooming out and other augmentation methods on the objects.
