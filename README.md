@@ -29,8 +29,9 @@ Annotations:
  - [x] Splitting the data into the training and test and making sure that we have every categories in both.
  - [x] Figuring out the code for evaluation.
  - [x] Pixel-wise annotation tool and segmentation taks -> Labelme.
+ - [x] running the code on GPU with over 8GB memory -> worked -> reporting the error.
+ - [ ] running the code on GPU with over 12GB memory -> AWS Sagerate
  - [ ] Start writing the report!
- - [ ] running the code on GPU with over 8GB memory
  - [ ] Calculating the Fscore and Recal based on the AP.
  - [x] Yolo2 vs Yolo3.
  - [ ] mmdetectron.
