@@ -30,12 +30,15 @@ Annotations:
  - [x] Figuring out the code for evaluation.
  - [x] Pixel-wise annotation tool and segmentation taks -> Labelme.
  - [x] running the code on GPU with over 8GB memory -> worked -> reporting the error.
+ 
  - [ ] running the code on GPU with over 12GB memory -> AWS Sagerate
+ - [x] labeling and background truth validation with Sagemaker -> Fixing the Docker forwarding port issue.
  - [ ] Start writing the report!
+ 
  - [ ] Calculating the Fscore and Recal based on the AP.
  - [x] Yolo2 vs Yolo3.
+ 
  - [ ] mmdetectron.
-
  - [ ] Running the detectron2 colab in `code8.py`. -> GPU is needed.
  - [ ] Creating the binary mask for the images created in `code5.py` for later on -> pycoco
  - [ ] Figuring out the rotation and zooming in zooming out and other augmentation methods on the objects.
