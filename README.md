@@ -16,7 +16,9 @@ Annotations:
  - [x] Running the Docker file.
  - [x] Installing the detectron2.
  - [x] Working withthe Meshrcnn, pytorch3. [added to the future work.] https://github.com/m-kashani/meshrcnn
- - [x] JPGImages.zip -> Add to GitHub. (.gitignore)
+ - [x] JPGImages.zip -> Original Files
+ - [x] Preprocessing the red images. -> Not a good result though still.
+ - [x] Enhanced.zip -> .png images
  - [x] Choosing 20 Images with most amount of Objects and then choosing 3 good images.
  - [x] Opened an issue on `code12.py`. > Add to do list here:
  - [x] Code 5 should crop the objects in images and save their renamed name in an specific directory.
@@ -25,19 +27,15 @@ Annotations:
  - [x] Refactoring all of the codes with autopep8 standard and auto config and installing Kite.
  - [x] Converting my `.csv to coco format/ imagenet` / code6.py and registering the data in detectron2.
  - [x] Preprocessed the data -> enhanced.png.
- - [x] Preprocessing the red images. -> Not a good result though still.
  - [x] Splitting the data into the training and test and making sure that we have every categories in both.
  - [x] Figuring out the code for evaluation.
  - [x] Pixel-wise annotation tool and segmentation taks -> Labelme.
  - [x] running the code on GPU with over 8GB memory -> worked -> reporting the error.
- 
  - [ ] running the code on GPU with over 12GB memory -> AWS Sagerate
  - [x] labeling and background truth validation with Sagemaker -> Fixing the Docker forwarding port issue.
  - [ ] Start writing the report!
- 
  - [ ] Calculating the Fscore and Recal based on the AP.
  - [x] Yolo2 vs Yolo3.
- 
  - [ ] mmdetectron.
  - [ ] Running the detectron2 colab in `code8.py`. -> GPU is needed.
  - [ ] Creating the binary mask for the images created in `code5.py` for later on -> pycoco
