@@ -5,6 +5,11 @@
 >Powered By: [[`detectron2(code)`](https://github.com/facebookresearch/detectron)]
 
 ## Abstract
+Sometimes we need to be sure about our very first steps, mainly when we havedived into the underwater ecosystem. While we need to think about being equippedwith an in-depth real-time application mindset,  it is still an open question for many of the marine scientists, which state of art methodology helps to be the most caring about the gaseous substances that provide the vital life-sustainingforce.  After a comprehensive exploratory data analysis on our new coral-reefdataset and validating the quality of the annotation, we have decided the rightpre-trained model on the appropriate dataset. We examined three-under developing open-source detection benchmarks on our coral reef dataset. Our study on the comparison of object detection algorithms includes, but is not limited to,YOLOv2, YOLOv3, Faster RCNN, CascadeRCNN, and RetinaNet.
+
+
+
+
 #	Explain the directories and everything ... 
 
 Annotations:
