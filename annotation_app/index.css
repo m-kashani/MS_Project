@@ -1,0 +1,40 @@
+nav ul{height: 500px;; width: 100px;}
+nav ul{overflow:hidden; overflow-y:scroll;}
+.flex-container {
+   display: flex;
+   background-color: rgb(248, 248, 248);
+   align-items: stretch;
+ }
+ 
+ .flex-container > div {
+   background-color: #7a6161;
+   margin: 5px;
+   padding: 5px;
+  
+ }
+ /* text align  */
+p{
+   text-align: center;
+}
+ /* table styles */
+ table {
+   width:100%;
+ }
+ table, th, td {
+   border: 1px solid black;
+   border-collapse: collapse;
+ }
+ th, td {
+   padding: 15px;
+   text-align: left;
+ }
+ #t01 tr:nth-child(even) {
+   background-color: #eee;
+ }
+ #t01 tr:nth-child(odd) {
+  background-color: #fff;
+ }
+ #t01 th {
+   background-color: black;
+   color: white;
+ }

@@ -29,3 +29,9 @@ csvtojson5/cocoapi
 /Data/MahdiDrive
 csvtojson5/balloon
 csvtojson5/soccer
+
+# Annotation App
+annotation_app/node_modules
+annotation_app/images
+annotation_app/exampleHTML
+

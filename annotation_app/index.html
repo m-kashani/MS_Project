@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Uncle_Horse</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body class="flex-container">
+    <!-- <header>header area</header> -->
+
+    <div>
+      <form id="post-form" class="post-form" method="post">
+        <label for="files"> Select Images </label>
+        <input id="files" type="file" multiple />
+        <output id="result" />
+      </form>
+      <hr />
+      <p>File Names</p>
+      <nav>
+        <ul id="filenames">
+          <li>image 1</li>
+          <li>image 2</li>
+          <li>image 3</li>
+          <li>image 4</li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="relative">
+      <table id="t01">
+        <tr>
+          <th>label</th>
+          <th>Xmin</th>
+          <th>Ymin</th>
+          <th>Xmax</th>
+          <th>Ymax</th>
+        </tr>
+        <tr>
+          <td>A</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+        </tr>
+      </table>
+    </div>
+    <div>
+      <input
+        id="rectname"
+        type="text"
+        placeholder="label"
+        style="width: 50px"
+      />
+      <button id="addrect">Add Rect</button>
+    </div>
+    <div class="relative">
+      <div id="canvasContainer">
+        <canvas
+          id="canvas"
+          width="2000"
+          height="2000"
+          style="border: solid 1px"
+        >
+        </canvas>
+      </div>
+    </div>
+
+    <!-- <div>blasdksld</div>
+        <footer>footer area</footer> -->
+    <script src="node_modules/fabric/dist/fabric.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
