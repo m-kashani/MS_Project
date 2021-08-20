@@ -1,5 +1,6 @@
 .DS_Store
 .vscode
+package-lock.json
 
 *.jpg
 *.png
@@ -8,6 +9,7 @@
 *.csv
 *.xlsx
 *.zip
+
 # *.ipynb
 .ipynb_checkpoints/
 R.ipynb
@@ -30,7 +32,10 @@ csvtojson5/cocoapi
 csvtojson5/balloon
 csvtojson5/soccer
 
+
+
 # Annotation App
+annotation_app/package-lock.json
 annotation_app/node_modules
 annotation_app/images
 annotation_app/exampleHTML
