@@ -74,11 +74,13 @@ function onAddClicked() {
     // TODO : we should get input label from here
     var rectName = document.getElementById("rectname").value.trim();
     // TODO : we should get color for
+   var color  =  document.getElementById("colorpalette").value
+   console.log(color)
     if (rectName === "") {
       alert("label should not be empty ! ! ! ");
       return;
     }
-    addNewRectToCanvas("red", rectName);
+    addNewRectToCanvas(color, rectName);
   });
 }
 
