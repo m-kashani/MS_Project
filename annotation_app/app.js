@@ -132,7 +132,7 @@ window.onload = function () {
         console.log(file);
         var li = document.createElement("li");
         li.innerHTML = file.name;
-
+        li.onclick =  onfilenameClicked
         //Only pics
         if (!file.type.match("image")) continue;
 
@@ -155,7 +155,11 @@ window.onload = function () {
   }
 };
 
-function makeListFromImages() {}
+function onfilenameClicked(event){
+ loadImageFromUrl(event.target.id)
+}
+
+// function makeListFromImages() {}
 // var rect = new fabric.Rect({
 //     top : 100,
 //     left : 100,
