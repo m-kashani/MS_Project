@@ -5,6 +5,7 @@ loadImageFromUrl("horse.jpg");
 // addNewRectToCanvas("red");
 getCoordiantes();
 onAddClicked();
+onCsvExport();
 
 function loadImageFromUrl(url) {
   fabric.Image.fromURL(url, function (img) {
@@ -158,7 +159,36 @@ window.onload = function () {
 function onfilenameClicked(event){
  loadImageFromUrl(event.target.id)
 }
+function onCsvExport(){
+ var downloadBtn = document.getElementById("downloadcsv")
+ downloadBtn.addEventListener("click",function(){
 
+var excelRows  = []
+var table = document.getElementById("t01")
+var tableRows = table.rows
+for (var i = 0; i < tableRows.length; i++) {
+  var rectInfoTr = tableRows[i];
+  var label = rectInfoTr.cells[0].innerHTML;
+  var xmin = rectInfoTr.cells[1].innerHTML;
+  var ymin = rectInfoTr.cells[2].innerHTML;
+  var xmax = rectInfoTr.cells[3].innerHTML;
+  var ymax = rectInfoTr.cells[4].innerHTML;
+excelRows.push([label,xmin,ymin,xmax,ymax])   
+
+}
+console.log(excelRows)
+let csvContent = "data:text/csv;charset=utf-8,";
+
+excelRows.forEach(function(rowArray) {
+    let row = rowArray.join(",");
+    csvContent += row + "\r\n";
+});
+
+var encodedUri = encodeURI(csvContent);
+window.open(encodedUri);
+
+ })
+}
 // function makeListFromImages() {}
 // var rect = new fabric.Rect({
 //     top : 100,
