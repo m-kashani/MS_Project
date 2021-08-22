@@ -1,6 +1,19 @@
+
+
+
 var canvas = new fabric.Canvas("canvas");
 var rects = [];
 
+var csv = []
+var currentImg = " "
+// har aks chand rect dare 
+// har csv file chand ta aks 
+// har rect bayad dakhele aks marbot be khodesh bashe 
+/*
+{
+csv[{image 1  , bounds : [{label, xmin , ymin , xmax , ymax },{},{}] } , {image 2  , bounds : []} , {image 3 , bounds : []}]
+}
+*/
 loadImageFromUrl("horse.jpg");
 // addNewRectToCanvas("red");
 getCoordiantes();
@@ -134,6 +147,27 @@ window.onload = function () {
         var li = document.createElement("li");
         li.innerHTML = file.name;
         li.onclick =  onfilenameClicked
+        
+        if (file.type.match("csv")){
+          var fileInput = document.getElementById("files"),
+
+    readFile = function () {
+        var reader = new FileReader();
+        reader.onload = function (event) {
+            // alert(reader.result)
+            
+           
+          setTimeout(() => {
+            console.log(csvToArray(reader.result))
+          }, 200);
+        };
+        // start reading the file. When it is done, calls the onload event defined above.
+        reader.readAsText(fileInput.files[0]);
+    };
+
+fileInput.addEventListener('change', readFile);
+
+        }
         //Only pics
         if (!file.type.match("image")) continue;
 
@@ -189,6 +223,35 @@ window.open(encodedUri);
 
  })
 }
+
+
+function csvToArray(str, delimiter = ",") {
+  // slice from start of text to the first \n index
+  // use split to create an array from string by delimiter
+  const headers = str.slice(0, str.indexOf("\n")).split(delimiter);
+
+  // slice from \n index + 1 to the end of the text
+  // use split to create an array of each csv value row
+  const rows = str.slice(str.indexOf("\n") + 1).split("\n");
+
+  // Map the rows
+  // split values from each row into an array
+  // use headers.reduce to create an object
+  // object properties derived from headers:values
+  // the object passed as an element of the array
+  const arr = rows.map(function (row) {
+    const values = row.split(delimiter);
+    const el = headers.reduce(function (object, header, index) {
+      object[header] = values[index];
+      return object;
+    }, {});
+    return el;
+  });
+
+  // return the array
+  return arr;
+}
+
 // function makeListFromImages() {}
 // var rect = new fabric.Rect({
 //     top : 100,
