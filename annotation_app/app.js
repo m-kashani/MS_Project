@@ -19,6 +19,7 @@ loadImageFromUrl("horse.jpg");
 getCoordiantes();
 onAddClicked();
 onCsvExport();
+oncsvImport();
 
 function loadImageFromUrl(url) {
   fabric.Image.fromURL(url, function (img) {
@@ -148,26 +149,7 @@ window.onload = function () {
         li.innerHTML = file.name;
         li.onclick =  onfilenameClicked
         
-        if (file.type.match("csv")){
-          var fileInput = document.getElementById("files"),
-
-    readFile = function () {
-        var reader = new FileReader();
-        reader.onload = function (event) {
-            // alert(reader.result)
-            
-           
-          setTimeout(() => {
-            console.log(csvToArray(reader.result))
-          }, 200);
-        };
-        // start reading the file. When it is done, calls the onload event defined above.
-        reader.readAsText(fileInput.files[0]);
-    };
-
-fileInput.addEventListener('change', readFile);
-
-        }
+    
         //Only pics
         if (!file.type.match("image")) continue;
 
@@ -265,3 +247,27 @@ function csvToArray(str, delimiter = ",") {
 // });
 // we should add tl and br x and ys to table
 // where we should update our table ? 1 when we add a new rect and 2. where we edit a new rect
+function oncsvImport(){
+
+ 
+    var fileInput = document.getElementById("files").addEventListener('change', function(event){
+      if(event.target.files[0].type.match("csv")){
+        var reader = new FileReader();
+        reader.onload = function (event) {
+            // alert(reader.result)
+            
+           
+          setTimeout(() => {
+            console.log(csvToArray(reader.result))
+          }, 200);
+        };
+        var fileInput = document.getElementById("files")
+        // start reading the file. When it is done, calls the onload event defined above.
+        reader.readAsText(fileInput.files[0]);
+      }
+      
+      
+    });
+   
+}
+    
