@@ -133,47 +133,51 @@ function editTableData(targetRowId, newaCoords) {
   tdList[4].innerHTML = newaCoords.br.y.toFixed(2);
 }
 
-window.onload = function () {
-  //Check File API support
-  if (window.File && window.FileList && window.FileReader) {
-    var filesInput = document.getElementById("files");
-    filesInput.addEventListener("change", function (event) {
-      var files = event.target.files; //FileList object
 
-      var filenameTag = document.getElementById("filenames");
-      for (var i = 0; i < files.length; i++) {
-        var file = files[i];
+function previewImages() {
 
-        console.log(file);
-        var li = document.createElement("li");
-        li.innerHTML = file.name;
-        li.onclick =  onfilenameClicked
-        
-    
-        //Only pics
-        if (!file.type.match("image")) continue;
-
-        var picReader = new FileReader();
-        picReader.addEventListener("load", function (event) {
-          var picFile = event.target;
-
-          console.log(picFile);
-
-          li.id = picFile.result;
-          loadImageFromUrl(picFile.result);
-        });
-        //Read the image
-        filenameTag.appendChild(li);
-        picReader.readAsDataURL(file);
-      }
-    });
-  } else {
-    console.log("Your browser does not support File API");
+  
+  
+  if (this.files) {
+    [].forEach.call(this.files, readAndPreview);
   }
-};
+  
+  function readAndPreview(file) {
+  
+  
+    if (!/\.(jpe?g|png|gif)$/i.test(file.name)) {
+      return alert(file.name + " is not an image");
+    } // else...
+    
+    var reader = new FileReader();
+    
+    reader.addEventListener("load", function() {
+     console.log(file.name, this.result)
+     var li = document.createElement("li");
+             li.innerHTML = file.name;
+             li.onclick =  onfilenameClicked
+             li.id= this.result
+             document.getElementById("filenames").appendChild(li)
+             loadImageFromUrl(this.result);
+     
+    });
+    
+    reader.readAsDataURL(file);
+    
+  }
+  
+  }
+  
+  document.querySelector('#files').addEventListener("change", previewImages);
+
 
 function onfilenameClicked(event){
  loadImageFromUrl(event.target.id)
+ var filenames = document.getElementById("filenames")
+ filenames.childNodes.forEach(function(item){
+  item.style = "color: black;"
+ })
+ event.target.style.color = "#69FF00"
 }
 function onCsvExport(){
  var downloadBtn = document.getElementById("downloadcsv")
