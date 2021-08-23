@@ -146,7 +146,7 @@ function previewImages() {
   
   
     if (!/\.(jpe?g|png|gif)$/i.test(file.name)) {
-      return alert(file.name + " is not an image");
+      return 
     } // else...
     
     var reader = new FileReader();
@@ -215,19 +215,23 @@ function csvToArray(str, delimiter = ",") {
   // slice from start of text to the first \n index
   // use split to create an array from string by delimiter
   const headers = str.slice(0, str.indexOf("\n")).split(delimiter);
-
+  const cleanHeaders =  headers.map(function(item){
+   return item.replace(/[^\w\s]/gi, '')
+  })
   // slice from \n index + 1 to the end of the text
   // use split to create an array of each csv value row
   const rows = str.slice(str.indexOf("\n") + 1).split("\n");
-
+ 
   // Map the rows
   // split values from each row into an array
   // use headers.reduce to create an object
   // object properties derived from headers:values
   // the object passed as an element of the array
-  const arr = rows.map(function (row) {
-    const values = row.split(delimiter);
-    const el = headers.reduce(function (object, header, index) {
+  const arr = rows.map(function (row,index) {
+    
+    const values = row.replace(/[\"]/g, '').split(delimiter)
+    const el = cleanHeaders.reduce(function (object, header, index) 
+    {   
       object[header] = values[index];
       return object;
     }, {});
@@ -261,9 +265,11 @@ function oncsvImport(){
             // alert(reader.result)
             
            
-          setTimeout(() => {
-            console.log(csvToArray(reader.result))
-          }, 200);
+          var importedCSV = csvToArray(reader.result)
+            console.log(importedCSV)
+            csv = importedCSV
+           console.log(cleanCsv(csv)) 
+       
         };
         var fileInput = document.getElementById("files")
         // start reading the file. When it is done, calls the onload event defined above.
@@ -275,3 +281,20 @@ function oncsvImport(){
    
 }
     
+function cleanCsv(csv){
+// return csv.map(function (item){
+// const {image, label , xmin , ymin , xmax , ymax} = item
+// console.log()
+// //  return item["\"image"].replace("/","").replace('"',"")
+// return{
+//   image:image.replace("/","").replace('"',""),
+//   label:label.replace("/","").replace('"',""),
+//   xmin:xmin,
+//   ymin:ymin,
+//   xmax:xmax,
+//   ymax:ymax
+// }
+// return{}
+// })'
+return csv
+}
