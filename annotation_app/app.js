@@ -61,6 +61,49 @@ function addNewRectToCanvas(color, rectName) {
   console.log(rects);
 }
 
+function addLoadedRectToCanvas(color, rectName,xmin,ymin,xmax,ymax) {
+  console.log("xmin",xmin , "ymin",ymin,"xmax",xmax , "ymax" , ymax)
+  var rawWidth = Math.trunc( xmax - xmin )
+  var rawheight = Math.trunc( ymax - ymin )
+  var width = isEven(rawWidth) ? rawWidth : rawWidth + 1 
+  var height = isEven(rawheight) ? rawheight : rawheight + 1 
+  
+  console.log(width,height)
+//width and height should be even
+  var rect = new fabric.Rect({
+    top:  ymin,
+    left: xmin,
+    width: width,
+    height:height,
+    fill: "transparent",
+    strokeWidth: 10,
+    stroke: color,
+    lockRotation: true,
+  });
+  //test
+
+  rect.toObject = (function (toObject) {
+    return function () {
+      return fabric.util.object.extend(toObject.call(this), {
+        name: this.name,
+      });
+    };
+  })(rect.toObject);
+
+  rect.name = rectName;
+  //
+  rect.setControlsVisibility({ mtr: false });
+
+  canvas.add(rect);
+
+  // addDataToTable(rect, rectName, color);
+
+  rects.push(rect);
+
+  console.log(rects);
+}
+
+
 function getCoordiantes() {
   canvas.on("mouse:up", function (e) {
     //check if user clicked an object
@@ -174,10 +217,14 @@ function previewImages() {
 function onfilenameClicked(event){
  loadImageFromUrl(event.target.id)
  var filenames = document.getElementById("filenames")
+
+ loadRectFromCSV(event.target.textContent)
+
  filenames.childNodes.forEach(function(item){
   item.style = "color: black;"
  })
  event.target.style.color = "#69FF00"
+
 }
 function onCsvExport(){
  var downloadBtn = document.getElementById("downloadcsv")
@@ -266,9 +313,10 @@ function oncsvImport(){
             
            
           var importedCSV = csvToArray(reader.result)
-            console.log(importedCSV)
+           
             csv = importedCSV
-           console.log(cleanCsv(csv)) 
+            console.log(csv)
+           
        
         };
         var fileInput = document.getElementById("files")
@@ -280,21 +328,21 @@ function oncsvImport(){
     });
    
 }
-    
-function cleanCsv(csv){
-// return csv.map(function (item){
-// const {image, label , xmin , ymin , xmax , ymax} = item
-// console.log()
-// //  return item["\"image"].replace("/","").replace('"',"")
-// return{
-//   image:image.replace("/","").replace('"',""),
-//   label:label.replace("/","").replace('"',""),
-//   xmin:xmin,
-//   ymin:ymin,
-//   xmax:xmax,
-//   ymax:ymax
-// }
-// return{}
-// })'
-return csv
+
+function loadRectFromCSV(imgName){
+  
+var rects = csv.filter(function(row){
+  return row.image == imgName.trim()
+})
+console.log(imgName)
+console.log(csv)
+console.log(rects)
+rects.forEach(function(item){
+  addLoadedRectToCanvas("red",item.label,item.xmin,item.ymin,item.xmax,item.ymax)
+  // console.log(`Xmin ${item.xmin} Ymin ${item.ymin} Xmax ${item.xmax} YMax ${item.ymax}`)
+})
+}
+
+function isEven(value) {
+    return !(value % 2)
 }
