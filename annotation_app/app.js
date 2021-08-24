@@ -219,10 +219,16 @@ function previewImages() {
 
 function onfilenameClicked(event){
  loadImageFromUrl(event.target.id)
+
  var filenames = document.getElementById("filenames")
+ //remove all exisiting object in canvas 
+ canvas.remove(...canvas.getObjects());
+//remove all exisiting data in table  (but we keep the table header)
+ var table = document.getElementById("t01")
+ table.innerHTML = table.firstChild
 
  loadRectFromCSV(event.target.textContent)
-
+ 
  filenames.childNodes.forEach(function(item){
   item.style = "color: black;"
  })
@@ -360,5 +366,3 @@ canvas.renderAll()
 function isEven(value) {
     return !(value % 2)
 }
-//isue number 1 when we load canvas stuck on cursor and some object are negative x or y
-// isue number 2 the position is not accurate 
