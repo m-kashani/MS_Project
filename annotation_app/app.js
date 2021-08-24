@@ -224,8 +224,19 @@ function onfilenameClicked(event){
  //remove all exisiting object in canvas 
  canvas.remove(...canvas.getObjects());
 //remove all exisiting data in table  (but we keep the table header)
- var table = document.getElementById("t01")
- table.innerHTML = table.firstChild
+ var table = document.getElementById("t01").innerHTML = 
+ `
+ <tr>
+ <th>label</th>
+ <th>Xmin</th>
+ <th>Ymin</th>
+ <th>Xmax</th>
+ <th>Ymax</th>
+</tr>
+
+ `
+
+
 
  loadRectFromCSV(event.target.textContent)
  
