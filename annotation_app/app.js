@@ -49,21 +49,21 @@ function addNewRectToCanvas(color, rectName) {
       });
     };
   })(rect.toObject);
-
-  rect.name = rectName;
+  var id = generateID()
+  rect.name = id;
   //
   rect.setControlsVisibility({ mtr: false });
 
   canvas.add(rect);
 
-  addDataToTable(rect, rectName, color);
+  addDataToTable(rect, rectName, color, id);
 
   rects.push(rect);
 
   console.log(rects);
 }
 
-function addLoadedRectToCanvas(color, rectName,xmin,ymin,xmax,ymax) {
+function addLoadedRectToCanvas(color, rectName,xmin,ymin,xmax,ymax,id) {
   console.log("xmin",xmin , "ymin",ymin,"xmax",xmax , "ymax" , ymax)
   var rawWidth = Math.trunc( xmax - xmin )
   var rawheight = Math.trunc( ymax - ymin )
@@ -93,13 +93,13 @@ function addLoadedRectToCanvas(color, rectName,xmin,ymin,xmax,ymax) {
     };
   })(rect.toObject);
 
-  rect.name = rectName;
+  rect.name = id;
   //
   rect.setControlsVisibility({ mtr: false });
 
   canvas.add(rect);
 
-  addDataToTable(rect, rectName, color);
+  addDataToTable(rect, rectName, color, id );
 
   rects.push(rect);
 
@@ -116,17 +116,17 @@ function getCoordiantes() {
       console.log(e.target);
       //this is the position of rect
 
-      // console.log("all objects",canvas.getObjects())
+ 
 
       var object = canvas.getActiveObject();
       var objectCenter = object.getCenterPoint();
       var translatedPoints = object.get("points");
-      //  console.log(object);
-      //  console.log(translatedPoints);
-      //  console.log("active objects" ,canvas.getActiveObjects());
+
       console.log(object);
 
-      // editTableData(object.name, object.aCoords);
+      // here we should update our data with changed data 
+      // to Table and csv Array 
+      editTableData(object.name, object.aCoords);
     }
   });
 }
@@ -145,14 +145,16 @@ function onAddClicked() {
   });
 }
 
-function addDataToTable(data, rectName, rectColor) {
+function addDataToTable(data, rectName, rectColor,rectID) {
   var label = document.createElement("td");
   var Xmin = document.createElement("td");
   var Ymin = document.createElement("td");
   var Xmax = document.createElement("td");
   var Ymax = document.createElement("td");
   var tableRow = document.createElement("tr");
-  tableRow.id = rectName;
+  // TODO : find rect and attach id to it csv 
+  // TODO : attach id to table row 
+  tableRow.id = rectID;
   label.style.color = rectColor;
   label.innerHTML = rectName;
   Xmin.innerHTML = data.aCoords.tl.x;
@@ -334,7 +336,8 @@ function oncsvImport(){
            
           var importedCSV = csvToArray(reader.result)
            
-            csv = importedCSV
+            
+            csv = attachId(importedCSV)
             console.log(csv)
            
        
@@ -363,7 +366,7 @@ rects.forEach(function(item){
   // this will only return number part of value 
   var  x = Math.trunc( item.xmin )
   var  y = Math.trunc( item.ymin )
-addLoadedRectToCanvas("red",item.label,x,y,item.xmax,item.ymax)
+addLoadedRectToCanvas(getRandomColor(),item.label,x,y,item.xmax,item.ymax,item.id)
 
   // console.log(`Xmin ${item.xmin} Ymin ${item.ymin} Xmax ${item.xmax} YMax ${item.ymax}`)
 })
@@ -376,4 +379,23 @@ canvas.renderAll()
 
 function isEven(value) {
     return !(value % 2)
+}
+
+function generateID(){
+  return  Date.now().toString(36) + Math.random().toString(36).substr(2);
+}
+function attachId(csv){
+ return csv.map(function(item){
+    var newId = generateID()
+   return Object.assign(item, {id:newId});
+
+  })
+}
+function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
 }
