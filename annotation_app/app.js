@@ -2,6 +2,7 @@
 
 
 var canvas = new fabric.Canvas("canvas");
+
 var rects = [];
 
 var csv = []
@@ -37,6 +38,7 @@ function addNewRectToCanvas(color, rectName) {
     strokeWidth: 2,
     stroke: color,
     lockRotation: true,
+    dirty: true
   });
   //test
 
@@ -67,8 +69,8 @@ function addLoadedRectToCanvas(color, rectName,xmin,ymin,xmax,ymax) {
   var rawheight = Math.trunc( ymax - ymin )
   var width = isEven(rawWidth) ? rawWidth : rawWidth + 1 
   var height = isEven(rawheight) ? rawheight : rawheight + 1 
-  
-  console.log(width,height)
+
+ 
 //width and height should be even
   var rect = new fabric.Rect({
     top:  ymin,
@@ -80,7 +82,8 @@ function addLoadedRectToCanvas(color, rectName,xmin,ymin,xmax,ymax) {
     stroke: color,
     lockRotation: true,
   });
-  //test
+ 
+// console.log(rect.x)
 
   rect.toObject = (function (toObject) {
     return function () {
@@ -96,7 +99,7 @@ function addLoadedRectToCanvas(color, rectName,xmin,ymin,xmax,ymax) {
 
   canvas.add(rect);
 
-  // addDataToTable(rect, rectName, color);
+  addDataToTable(rect, rectName, color);
 
   rects.push(rect);
 
@@ -123,7 +126,7 @@ function getCoordiantes() {
       //  console.log("active objects" ,canvas.getActiveObjects());
       console.log(object);
 
-      editTableData(object.name, object.aCoords);
+      // editTableData(object.name, object.aCoords);
     }
   });
 }
@@ -338,11 +341,24 @@ console.log(imgName)
 console.log(csv)
 console.log(rects)
 rects.forEach(function(item){
-  addLoadedRectToCanvas("red",item.label,item.xmin,item.ymin,item.xmax,item.ymax)
+
+  // addLoadedRectToCanvas("red",item.label,item.xmin,item.ymin,item.xmax,item.ymax)
+  // this will only return number part of value 
+  var  x = Math.trunc( item.xmin )
+  var  y = Math.trunc( item.ymin )
+addLoadedRectToCanvas("red",item.label,x,y,item.xmax,item.ymax)
+
   // console.log(`Xmin ${item.xmin} Ymin ${item.ymin} Xmax ${item.xmax} YMax ${item.ymax}`)
 })
+
+
+
+canvas.requestRenderAll()
+canvas.renderAll()
 }
 
 function isEven(value) {
     return !(value % 2)
 }
+//isue number 1 when we load canvas stuck on cursor and some object are negative x or y
+// isue number 2 the position is not accurate 
