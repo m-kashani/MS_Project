@@ -3,7 +3,7 @@
 
 var canvas = new fabric.Canvas("canvas");
 
-var rects = [];
+// var rects = [];
 
 var csv = []
 var currentImg = " "
@@ -15,7 +15,7 @@ var currentImg = " "
 csv[{image 1  , bounds : [{label, xmin , ymin , xmax , ymax },{},{}] } , {image 2  , bounds : []} , {image 3 , bounds : []}]
 }
 */
-loadImageFromUrl("horse.jpg");
+// loadImageFromUrl("horse.jpg");
 // addNewRectToCanvas("red");
 getCoordiantes();
 onAddClicked();
@@ -49,18 +49,27 @@ function addNewRectToCanvas(color, rectName) {
       });
     };
   })(rect.toObject);
-  var id = generateID()
-  rect.name = id;
+  var newId = generateID()
+  rect.name = newId;
+  console.log(rect.aCoords , "this is width")
   //
   rect.setControlsVisibility({ mtr: false });
 
   canvas.add(rect);
 
-  addDataToTable(rect, rectName, color, id);
+  addDataToTable(rect, rectName, color, newId);
+  addNewRecordToCsv({
+    image : currentImg,
+    label : rectName,
+    xmin  : 0,
+    ymin  : 0,
+    xmax  : 0, 
+    xmax  : 0, 
+    id:newId
+  })
+  // rects.push(rect);
 
-  rects.push(rect);
-
-  console.log(rects);
+  // console.log(rects);
 }
 
 function addLoadedRectToCanvas(color, rectName,xmin,ymin,xmax,ymax,id) {
@@ -101,9 +110,9 @@ function addLoadedRectToCanvas(color, rectName,xmin,ymin,xmax,ymax,id) {
 
   addDataToTable(rect, rectName, color, id );
 
-  rects.push(rect);
+  // rects.push(rect);
 
-  console.log(rects);
+  // console.log(rects);
 }
 
 
@@ -126,15 +135,16 @@ function getCoordiantes() {
 
       // here we should update our data with changed data 
       // to Table and csv Array 
+      editRecordToCsv(object.name,object.aCoords)
       editTableData(object.name, object.aCoords);
     }
   });
 }
 function onAddClicked() {
   document.getElementById("addrect").addEventListener("click", function () {
-    // TODO : we should get input label from here
+    //  get input label from here
     var rectName = document.getElementById("rectname").value.trim();
-    // TODO : we should get color for
+    //  get color 
    var color  =  document.getElementById("colorpalette").value
    console.log(color)
     if (rectName === "") {
@@ -152,8 +162,7 @@ function addDataToTable(data, rectName, rectColor,rectID) {
   var Xmax = document.createElement("td");
   var Ymax = document.createElement("td");
   var tableRow = document.createElement("tr");
-  // TODO : find rect and attach id to it csv 
-  // TODO : attach id to table row 
+
   tableRow.id = rectID;
   label.style.color = rectColor;
   label.innerHTML = rectName;
@@ -242,6 +251,8 @@ function onfilenameClicked(event){
 
  loadRectFromCSV(event.target.textContent)
  
+ currentImg=event.target.textContent
+
  filenames.childNodes.forEach(function(item){
   item.style = "color: black;"
  })
@@ -333,14 +344,14 @@ function oncsvImport(){
         reader.onload = function (event) {
             // alert(reader.result)
             
-           
+          
           var importedCSV = csvToArray(reader.result)
-           
+          
             
             csv = attachId(importedCSV)
             console.log(csv)
-           
-       
+          
+      
         };
         var fileInput = document.getElementById("files")
         // start reading the file. When it is done, calls the onload event defined above.
@@ -398,4 +409,39 @@ function getRandomColor() {
     color += letters[Math.floor(Math.random() * 16)];
   }
   return color;
+}
+
+function addNewRecordToCsv(newRecord){
+  var lastIndex  =  0 
+ csv.forEach(function(item,index){
+    if (item.image== currentImg){
+      lastIndex  = index
+     
+    } 
+})
+console.log(lastIndex)
+if(lastIndex === 0)   csv.push(newRecord)  
+ else{
+  lastIndex++ 
+   csv.splice(lastIndex,0,newRecord)
+ }
+ 
+console.log("csv " , csv)
+
+
+}
+function editRecordToCsv(id , newValues){
+  csv.forEach(function(item,index){
+    if(item.id == id){
+      item.xmin = newValues.tl.x
+      item.ymin = newValues.tl.y
+      item.xmax = newValues.br.x
+      item.ymax = newValues.br.y
+      console.log("item updated"  , item , "index" ,index )
+
+    }
+  })
+  
+console.log(csv)
+
 }
