@@ -1,26 +1,14 @@
 
 
-
 var canvas = new fabric.Canvas("canvas");
-
-// var rects = [];
-
 var csv = []
 var currentImg = " "
-// har aks chand rect dare 
-// har csv file chand ta aks 
-// har rect bayad dakhele aks marbot be khodesh bashe 
-/*
-{
-csv[{image 1  , bounds : [{label, xmin , ymin , xmax , ymax },{},{}] } , {image 2  , bounds : []} , {image 3 , bounds : []}]
-}
-*/
-// loadImageFromUrl("horse.jpg");
-// addNewRectToCanvas("red");
+
 getCoordiantes();
 onAddClicked();
 onCsvExport();
 oncsvImport();
+onDeleteObject();
 
 function loadImageFromUrl(url) {
   fabric.Image.fromURL(url, function (img) {
@@ -67,9 +55,7 @@ function addNewRectToCanvas(color, rectName) {
     xmax  : 0, 
     id:newId
   })
-  // rects.push(rect);
 
-  // console.log(rects);
 }
 
 function addLoadedRectToCanvas(color, rectName,xmin,ymin,xmax,ymax,id) {
@@ -92,7 +78,7 @@ function addLoadedRectToCanvas(color, rectName,xmin,ymin,xmax,ymax,id) {
     lockRotation: true,
   });
  
-// console.log(rect.x)
+
 
   rect.toObject = (function (toObject) {
     return function () {
@@ -110,9 +96,7 @@ function addLoadedRectToCanvas(color, rectName,xmin,ymin,xmax,ymax,id) {
 
   addDataToTable(rect, rectName, color, id );
 
-  // rects.push(rect);
 
-  // console.log(rects);
 }
 
 
@@ -444,4 +428,45 @@ function editRecordToCsv(id , newValues){
   
 console.log(csv)
 
+}
+
+function onDeleteObject(){
+  document.addEventListener('keydown', function(event) {
+    const key = event.key; // const {key} = event; ES6+
+    if (key === "Delete") {
+      var object = canvas.getActiveObject()
+      deleteItemfromCanvas(object)
+      deleteItemFromTable(object) 
+      deleteItemFromCSV(object)
+    
+      
+    }
+  });
+  
+}
+function deleteItemfromCanvas(rectange){
+canvas.remove(rectange)
+}
+
+function deleteItemFromTable(rectange){
+  var table = document.getElementById("t01")
+ 
+  var tableRows = table.rows
+  
+  for(var i = 0 ; i < tableRows.length; i++){
+   if(tableRows[i].id == rectange.name){
+    table.deleteRow(i)
+   }
+  }
+ 
+}
+
+
+function deleteItemFromCSV(rectange){
+//rectange.name is the id 
+console.log(csv)
+ csv = csv.filter(function(item,index){
+  return item.id !== rectange.name
+})
+console.log("item removed with id = " + rectange.name)
 }
