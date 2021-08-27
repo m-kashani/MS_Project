@@ -28,7 +28,7 @@ function addNewRectToCanvas(color, rectName) {
     lockRotation: true,
     dirty: true
   });
-  //test
+
 
   rect.toObject = (function (toObject) {
     return function () {
@@ -107,14 +107,7 @@ function getCoordiantes() {
       //clicked on object
       console.log("clicked on object ");
       console.log(e.target);
-      //this is the position of rect
-
- 
-
       var object = canvas.getActiveObject();
-      var objectCenter = object.getCenterPoint();
-      var translatedPoints = object.get("points");
-
       console.log(object);
 
       // here we should update our data with changed data 
@@ -130,7 +123,6 @@ function onAddClicked() {
     var rectName = document.getElementById("rectname").value.trim();
     //  get color 
    var color  =  document.getElementById("colorpalette").value
-   console.log(color)
     if (rectName === "") {
       alert("label should not be empty ! ! ! ");
       return;
@@ -193,7 +185,7 @@ function previewImages() {
     var reader = new FileReader();
     
     reader.addEventListener("load", function() {
-     console.log(file.name, this.result)
+     console.log("this is the result of reading  a file  : " + file.name +" " +this.result)
      var li = document.createElement("li");
              li.innerHTML = file.name;
              li.onclick =  onfilenameClicked
@@ -247,18 +239,10 @@ function onCsvExport(){
  var downloadBtn = document.getElementById("downloadcsv")
  downloadBtn.addEventListener("click",function(){
    console.log(csvCleaning())
-   var b = csvCleaning()
-   var a = [
-    ['name','description'],	
-    ['david','123'],
-    ['jona','""'],
-    ['a','b'],
   
-  ]
-  // console.log(b.length)
-  exportToCsv("abc.csv",b)
-  // var exportex = 
-  // exportToCsv('export.csv',exportex)
+ 
+  exportToCsv("abc.csv", csvCleaning())
+ 
  
  })
 
@@ -347,7 +331,7 @@ function csvToArray(str, delimiter = ",") {
       object[header] = values[index];
       return object;
     }, {});
-    console.log(el)
+ 
     return el;
   });
 
@@ -355,19 +339,6 @@ function csvToArray(str, delimiter = ",") {
   return arr;
 }
 
-// function makeListFromImages() {}
-// var rect = new fabric.Rect({
-//     top : 100,
-//     left : 100,
-//     width : 60,
-//     height : 70,
-//     fill : 'transparent',
-//     strokeWidth : 1,
-//     stroke : 'black',
-//     lockRotation: true,
-// });
-// we should add tl and br x and ys to table
-// where we should update our table ? 1 when we add a new rect and 2. where we edit a new rect
 function oncsvImport(){
 
  
@@ -401,16 +372,17 @@ function loadRectFromCSV(imgName){
 var rects = csv.filter(function(row){
   return row.image == imgName.trim()
 })
-console.log(imgName)
-console.log(csv)
+console.log("image",imgName)
+console.log("loaded CSV",csv)
 console.log(rects)
 rects.forEach(function(item){
 
   // addLoadedRectToCanvas("red",item.label,item.xmin,item.ymin,item.xmax,item.ymax)
-  // this will only return number part of value 
-  var  x = Math.trunc( item.xmin )
-  var  y = Math.trunc( item.ymin )
-addLoadedRectToCanvas(getRandomColor(),item.label,x,y,item.xmax,item.ymax,item.id)
+  // this will only return number part of value
+  typeof(item.xmin) 
+  var  x = Math.trunc( parseFloat(item.xmin) )
+  var  y = Math.trunc( parseFloat(item.ymin))
+addLoadedRectToCanvas(getRandomColor(),item.label,x,y,parseFloat(item.xmax),parseFloat(item.ymax),item.id)
 
   // console.log(`Xmin ${item.xmin} Ymin ${item.ymin} Xmax ${item.xmax} YMax ${item.ymax}`)
 })
@@ -459,7 +431,7 @@ if(lastIndex === 0)   csv.push(newRecord)
    csv.splice(lastIndex,0,newRecord)
  }
  
-console.log("csv " , csv)
+console.log("csv New Record Added" , csv)
 
 
 }
@@ -475,7 +447,7 @@ function editRecordToCsv(id , newValues){
     }
   })
   
-console.log(csv)
+console.log("CSV Updated ",csv)
 
 }
 
@@ -513,7 +485,7 @@ function deleteItemFromTable(rectange){
 
 function deleteItemFromCSV(rectange){
 //rectange.name is the id 
-console.log(csv)
+
  csv = csv.filter(function(item,index){
   return item.id !== rectange.name
 })
