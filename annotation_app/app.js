@@ -246,32 +246,80 @@ function onfilenameClicked(event){
 function onCsvExport(){
  var downloadBtn = document.getElementById("downloadcsv")
  downloadBtn.addEventListener("click",function(){
-
-var excelRows  = []
-var table = document.getElementById("t01")
-var tableRows = table.rows
-for (var i = 0; i < tableRows.length; i++) {
-  var rectInfoTr = tableRows[i];
-  var label = rectInfoTr.cells[0].innerHTML;
-  var xmin = rectInfoTr.cells[1].innerHTML;
-  var ymin = rectInfoTr.cells[2].innerHTML;
-  var xmax = rectInfoTr.cells[3].innerHTML;
-  var ymax = rectInfoTr.cells[4].innerHTML;
-excelRows.push([label,xmin,ymin,xmax,ymax])   
+   console.log(csvCleaning())
+   var b = csvCleaning()
+   var a = [
+    ['name','description'],	
+    ['david','123'],
+    ['jona','""'],
+    ['a','b'],
+  
+  ]
+  // console.log(b.length)
+  exportToCsv("abc.csv",b)
+  // var exportex = 
+  // exportToCsv('export.csv',exportex)
+ 
+ })
 
 }
-console.log(excelRows)
-let csvContent = "data:text/csv;charset=utf-8,";
+function csvCleaning(){
+  // this function turn array object to array array 
+  // array of object  => array of array 
+  var cleanedCsv = []
+   csv.map(function(item){
+     if(item.label){
+      cleanedCsv.push([item.image, item.label,item.xmin,item.ymin,item.xmax,item.ymax])
+     }
+  
+  })
+  cleanedCsv.unshift(['image',"label","xmin","ymin","xmax","ymax"])
 
-excelRows.forEach(function(rowArray) {
-    let row = rowArray.join(",");
-    csvContent += row + "\r\n";
-});
+console.log(cleanedCsv)
+  return cleanedCsv
 
-var encodedUri = encodeURI(csvContent);
-window.open(encodedUri);
+}
+function exportToCsv(filename, rows) {
+  var processRow = function (row) {
+      var finalVal = '';
+      for (var j = 0; j < row.length; j++) {
+       
+       
+          var innerValue = row[j] === null ? '' : row[j].toString();
+          if (row[j] instanceof Date) {
+              innerValue = row[j].toLocaleString();
+          };
+          var result = innerValue.replace(/"/g, '""');
+          if (result.search(/("|,|\n)/g) >= 0)
+              result = '"' + result + '"';
+          if (j > 0)
+              finalVal += ',';
+          finalVal += result;
+      }
+      return finalVal + '\n';
+  };
 
- })
+  var csvFile = '';
+  for (var i = 0; i < rows.length; i++) {
+      csvFile += processRow(rows[i]);
+  }
+
+  var blob = new Blob([csvFile], { type: 'text/csv;charset=utf-8;' });
+  if (navigator.msSaveBlob) { // IE 10+
+      navigator.msSaveBlob(blob, filename);
+  } else {
+      var link = document.createElement("a");
+      if (link.download !== undefined) { // feature detection
+          // Browsers that support HTML5 download attribute
+          var url = URL.createObjectURL(blob);
+          link.setAttribute("href", url);
+          link.setAttribute("download", filename);
+          link.style.visibility = 'hidden';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+      }
+  }
 }
 
 
@@ -299,6 +347,7 @@ function csvToArray(str, delimiter = ",") {
       object[header] = values[index];
       return object;
     }, {});
+    console.log(el)
     return el;
   });
 
