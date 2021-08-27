@@ -94,7 +94,8 @@ function addLoadedRectToCanvas(color, rectName,xmin,ymin,xmax,ymax,id) {
 
   canvas.add(rect);
 
-  addDataToTable(rect, rectName, color, id );
+  // addDataToTable(rect, rectName, color, id );
+  addLoadedDataToTable(rectName,xmin,ymin,xmax,ymax,id,color)
 
 
 }
@@ -142,10 +143,10 @@ function addDataToTable(data, rectName, rectColor,rectID) {
   tableRow.id = rectID;
   label.style.color = rectColor;
   label.innerHTML = rectName;
-  Xmin.innerHTML = data.aCoords.tl.x;
-  Ymin.innerHTML = data.aCoords.tl.y;
-  Xmax.innerHTML = data.aCoords.br.x;
-  Ymax.innerHTML = data.aCoords.br.y;
+  Xmin.innerHTML = data.aCoords.tl.x.toFixed(2)
+  Ymin.innerHTML = data.aCoords.tl.y.toFixed(2)
+  Xmax.innerHTML = data.aCoords.br.x.toFixed(2)
+  Ymax.innerHTML = data.aCoords.br.y.toFixed(2)
 
   tableRow.appendChild(label);
   tableRow.appendChild(Xmin);
@@ -155,6 +156,31 @@ function addDataToTable(data, rectName, rectColor,rectID) {
 
   document.getElementById("t01").appendChild(tableRow);
 }
+function addLoadedDataToTable(rectName,xmin,ymin,xmax,ymax,id,color) {
+  var label = document.createElement("td");
+  var Xmin = document.createElement("td");
+  var Ymin = document.createElement("td");
+  var Xmax = document.createElement("td");
+  var Ymax = document.createElement("td");
+  var tableRow = document.createElement("tr");
+
+  tableRow.id = id
+  label.style.color = color;
+  label.innerHTML = rectName;
+  Xmin.innerHTML = xmin.toFixed(2)
+  Ymin.innerHTML = ymin.toFixed(2)
+  Xmax.innerHTML = xmax.toFixed(2)
+  Ymax.innerHTML = ymax.toFixed(2)
+
+  tableRow.appendChild(label);
+  tableRow.appendChild(Xmin);
+  tableRow.appendChild(Ymin);
+  tableRow.appendChild(Xmax);
+  tableRow.appendChild(Ymax);
+
+  document.getElementById("t01").appendChild(tableRow);
+}
+
 
 //we shoud getactive object on mouse down and update the edited objectdata  on mouse up
 function editTableData(targetRowId, newaCoords) {
@@ -187,6 +213,8 @@ function previewImages() {
     reader.addEventListener("load", function() {
      console.log("this is the result of reading  a file  : " + file.name +" " +this.result)
      var li = document.createElement("li");
+     li.style.color="white"
+    
              li.innerHTML = file.name;
              li.onclick =  onfilenameClicked
              li.id= this.result
@@ -267,8 +295,7 @@ function exportToCsv(filename, rows) {
   var processRow = function (row) {
       var finalVal = '';
       for (var j = 0; j < row.length; j++) {
-       
-       
+
           var innerValue = row[j] === null ? '' : row[j].toString();
           if (row[j] instanceof Date) {
               innerValue = row[j].toLocaleString();

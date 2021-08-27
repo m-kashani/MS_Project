@@ -4,20 +4,21 @@
     <meta charset="utf-8" />
     <title>Uncle_Horse</title>
     <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   </head>
   <body class="flex-container">
     <!-- <header>header area</header> -->
 
     <div>
       <form id="post-form" class="post-form" method="post">
-        <label for="files"> Select Images </label>
-        <input id="files" type="file" multiple />
+        <label for="files" style="color: white;"> Select Images Or CSV File </label>
+        <input id="files" type="file" multiple class="form-control"/>
         <output id="result" />
       </form>
       <hr />
-      <p>File Names</p>
+      <p style="color: white;">File Names</p>
       <nav>
-        <ul id="filenames">
+        <ul style="margin: 50px; padding: 20px ;"id="filenames">
         </ul>
       </nav>
     </div>
@@ -39,11 +40,11 @@
         id="rectname"
         type="text"
         placeholder="label"
-        style="width: 50px"
+        style="width: 200px"
       />
       <input type="color" id="colorpalette"  value="#ff0000"><br><br>
-      <button id="addrect">Add Rect</button>
-      <button id="downloadcsv">Download CSV</button>
+      <button id="addrect"type="button" class="btn btn-primary">Add Rect</button>
+      <button id="downloadcsv" type="button" class="btn btn-success">Download CSV</button>
     </div>
     <div class="relative">
       <div id="canvasContainer">
@@ -59,6 +60,7 @@
 
     <!-- <div>blasdksld</div>
         <footer>footer area</footer> -->
+      
     <script src="node_modules/fabric/dist/fabric.js"></script>
     <script src="app.js"></script>
   </body>

@@ -1,5 +1,8 @@
-nav ul{height: 500px;; width: 100px;}
+nav ul{height: 500px;; width: 100%;}
 nav ul{overflow:hidden; overflow-y:scroll;}
+li{
+  margin: 20px;
+}
 .flex-container {
    display: flex;
    background-color: rgb(248, 248, 248);
