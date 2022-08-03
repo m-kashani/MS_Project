@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Uncle_Horse</title>
+    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  </head>
+  <body class="flex-container">
+    <!-- <header>header area</header> -->
+
+    <div>
+      <form id="post-form" class="post-form" method="post">
+        <label for="files" style="color: white;"> Select Images Or CSV File </label>
+        <input id="files" type="file" multiple class="form-control"/>
+        <output id="result" />
+      </form>
+      <hr />
+      <p style="color: white;">File Names</p>
+      <nav>
+        <ul style="margin: 50px; padding: 20px ;"id="filenames">
+        </ul>
+      </nav>
+    </div>
+
+    <div class="relative">
+      <table id="t01">
+        <tr>
+          <th>label</th>
+          <th>Xmin</th>
+          <th>Ymin</th>
+          <th>Xmax</th>
+          <th>Ymax</th>
+        </tr>
+        
+      </table>
+    </div>
+    <div>
+      <input
+        id="rectname"
+        type="text"
+        placeholder="label"
+        style="width: 200px"
+      />
+      <input type="color" id="colorpalette"  value="#ff0000"><br><br>
+      <button id="addrect"type="button" class="btn btn-primary">Add Rect</button>
+      <button id="downloadcsv" type="button" class="btn btn-success">Download CSV</button>
+    </div>
+    <div class="relative">
+      <div id="canvasContainer">
+        <canvas
+          id="canvas"
+          width="3000"
+          height="3000"
+          style="border: solid 1px"
+        >
+        </canvas>
+      </div>
+    </div>
+
+    <!-- <div>blasdksld</div>
+        <footer>footer area</footer> -->
+      
+    <script src="node_modules/fabric/dist/fabric.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
